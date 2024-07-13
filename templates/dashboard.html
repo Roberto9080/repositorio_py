@@ -1,0 +1,43 @@
+<!-- PROYECTO_PY/templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_dashboard.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>Bienvenido, {{ username }}!</h2>
+        <p>Has iniciado sesión correctamente.</p>
+        <div class="grid-container">
+            <div class="grid-item">
+                <a href="#clientes">
+                    <h3>Clientes</h3>
+                    <p>Gestión de clientes</p>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="#abonos">
+                    <h3>Abonos</h3>
+                    <p>Gestión de abonos</p>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="#ventas">
+                    <h3>Ventas</h3>
+                    <p>Gestión de ventas</p>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="#inventario">
+                    <h3>Inventario</h3>
+                    <p>Gestión de inventario</p>
+                </a>
+            </div>
+        </div>
+        <a href="{{ url_for('logout') }}" class="logout-button">Cerrar Sesión</a>
+    </div>
+</body>
+</html>

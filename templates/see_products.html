@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_see_products.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Productos Disponibles</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Existencias</th>
+                    <th>Precio</th>
+                    <th>Talla</th>
+                    <th>Imagen</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr>
+                    <td>{{ producto.marca }}</td>
+                    <td>{{ producto.modelo }}</td>
+                    <td>{{ producto.color }}</td>
+                    <td>{{ producto.existencias }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.talla }}</td>
+                    <td><img src="{{ url_for('static', filename='images/' ~ producto.imagen_nombre) }}" alt="{{ producto.modelo }}" width="50"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('dashboard') }}" class="button">Volver al Dashboard</a>
+    </div>
+</body>
+</html>

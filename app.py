@@ -77,6 +77,7 @@ def add_product():
         existencias = int(request.form['existencias'])
         precio = float(request.form['precio'])
         talla = int(request.form['talla'])
+        tipo = request.form['tipo']
         imagen = request.files['imagen']
         
         # Guarda la imagen en el servidor (opcional, puedes ajustar esta parte según tus necesidades)
@@ -86,9 +87,9 @@ def add_product():
         # Inserta los datos en la base de datos
         cursor = conexion.cursor()
         cursor.execute("""
-            INSERT INTO Productos (marca, modelo, color, existencias, precio, talla, imagen_nombre)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """, (marca, modelo, color, existencias, precio, talla, imagen_nombre))
+            INSERT INTO Productos (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre))
         conexion.commit()  # Guarda los cambios en la base de datos
         
         return redirect(url_for('dashboard'))  # Redirige al dashboard después de agregar el producto

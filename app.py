@@ -96,19 +96,27 @@ def add_product():
 
     return render_template('add_product.html')  # Renderiza la plantilla para agregar productos
 
-# Ruta para ver los productos
-@app.route('/see_products')
+# Ruta para ver los productos con búsqueda
+@app.route('/see_products', methods=['GET', 'POST'])
 def see_products():
     # Verifica si el usuario está en la sesión
     if 'username' not in session:
         return redirect(url_for('login'))  # Si no hay sesión, redirige al login
 
+    search_query = ''
+    if request.method == 'POST':
+        search_query = request.form['search']
+
     # Obtiene los productos de la base de datos
     cursor = conexion.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM Productos")
+    if search_query:
+        cursor.execute("SELECT * FROM Productos WHERE marca LIKE %s OR modelo LIKE %s OR color LIKE %s OR tipo LIKE %s", 
+                       ('%' + search_query + '%', '%' + search_query + '%', '%' + search_query + '%', '%' + search_query + '%'))
+    else:
+        cursor.execute("SELECT * FROM Productos")
     productos = cursor.fetchall()  # Obtiene todos los resultados de la consulta
 
-    return render_template('see_products.html', productos=productos)  # Renderiza la plantilla con los productos
+    return render_template('see_products.html', productos=productos, search_query=search_query)  # Renderiza la plantilla con los productos
 
 # Inicia la aplicación Flask en modo debug
 if __name__ == '__main__':

@@ -9,6 +9,10 @@
 <body>
     <div class="container">
         <h1>Productos Disponibles</h1>
+        <form action="{{ url_for('see_products') }}" method="post" class="search-form">
+            <input type="text" name="search" placeholder="Buscar productos..." value="{{ search_query }}">
+            <button type="submit" class="button">Buscar</button>
+        </form>
         <table>
             <thead>
                 <tr>

@@ -6,50 +6,38 @@ body {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 400px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    text-align: center;
 }
 
 h1 {
-    text-align: center;
     color: #333;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
+label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
 }
 
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.form-group input {
+input[type="text"],
+input[type="number"],
+input[type="file"] {
+    width: 100%;
     padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    width: calc(100% - 16px);
 }
 
-.form-group input[type="file"] {
-    padding: 3px;
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-button, .button {
+.button {
+    display: inline-block;
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -58,13 +46,18 @@ button, .button {
     border-radius: 4px;
     cursor: pointer;
     text-align: center;
+    margin-top: 20px;
 }
 
-button:hover, .button:hover {
-    background-color: #00b33c;
+.button:hover {
+    background-color: #0056b3;
 }
 
-.button {
-    display: inline-block;
-    margin-top: 10px;
+/* Estilos para posicionar el botón en la esquina superior izquierda */
+.dashboard-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin-left: 200px;
+    margin-top: 120px;  /* Asegura que el margen superior no se aplique aquí */
 }

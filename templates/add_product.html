@@ -7,43 +7,34 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_add_product.css') }}">
 </head>
 <body>
+    <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Dashboard</a>
     <div class="container">
         <h1>Agregar Producto</h1>
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="marca">Marca:</label>
-                <input type="text" id="marca" name="marca" required>
-            </div>
-            <div class="form-group">
-                <label for="modelo">Modelo:</label>
-                <input type="text" id="modelo" name="modelo" required>
-            </div>
-            <div class="form-group">
-                <label for="color">Color:</label>
-                <input type="text" id="color" name="color" required>
-            </div>
-            <div class="form-group">
-                <label for="existencias">Existencias:</label>
-                <input type="number" id="existencias" name="existencias" required>
-            </div>
-            <div class="form-group">
-                <label for="precio">Precio:</label>
-                <input type="number" step="0.01" id="precio" name="precio" required>
-            </div>
-            <div class="form-group">
-                <label for="talla">Talla:</label>
-                <input type="number" id="talla" name="talla" required>
-            </div>
-            <div class="form-group">
-                <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" name="imagen" required>
-            </div>
-            <div class="form-buttons">
-                <button type="submit">Agregar Producto</button>
-                <a href="{{ url_for('see_products') }}" class="button">Ver Productos</a>
-            </div>
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca" name="marca" required>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo" name="modelo" required>
+
+            <label for="color">Color:</label>
+            <input type="text" id="color" name="color" required>
+
+            <label for="existencias">Existencias:</label>
+            <input type="number" id="existencias" name="existencias" required>
+
+            <label for="precio">Precio:</label>
+            <input type="number" step="0.01" id="precio" name="precio" required>
+
+            <label for="talla">Talla:</label>
+            <input type="number" id="talla" name="talla" required>
+
+            <label for="imagen">Imagen:</label>
+            <input type="file" id="imagen" name="imagen">
+
+            <button type="submit" class="button">Agregar Producto</button>
+            <a href="{{ url_for('see_products') }}" class="button">Ver Productos</a>
         </form>
-        <a href="{{ url_for('dashboard') }}" class="button">Volver al Dashboard</a>
     </div>
 </body>
 </html>

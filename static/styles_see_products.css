@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -22,7 +22,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 table, th, td {
@@ -30,28 +30,44 @@ table, th, td {
 }
 
 th, td {
-    padding: 10px;
-    text-align: left;
+    padding: 12px;
+    text-align: center;
 }
 
 th {
     background-color: #f2f2f2;
+    color: #333;
 }
 
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Ajuste del tamaño de las imágenes */
 img {
-    max-width: 50px;
-    height: auto;
+    max-width: 150px; /* Tamaño más grande */
+    height: auto; /* Mantener la proporción */
+    border-radius: 4px;
+}
+
+/* Asegurar que el contenedor permita que la imagen crezca */
+td img {
+    width: 75%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    max-width: 150px; /* Tamaño máximo de la imagen */
+    height: auto; /* Mantener la proporción */
 }
 
 .button {
     display: inline-block;
     padding: 10px 20px;
-    margin-top: 20px;
     background-color: #007bff;
     color: white;
     text-decoration: none;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
     text-align: center;
+    margin-top: 10px;
 }
 
 .button:hover {

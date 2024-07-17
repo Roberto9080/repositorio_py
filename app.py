@@ -96,7 +96,7 @@ def add_product():
 
     return render_template('add_product.html')  # Renderiza la plantilla para agregar productos
 
-# Ruta para ver los productos con búsqueda
+# Ruta para ver los productos con búsqueda y filtros adicionales
 @app.route('/see_products', methods=['GET', 'POST'])
 def see_products():
     # Verifica si el usuario está en la sesión
@@ -104,19 +104,51 @@ def see_products():
         return redirect(url_for('login'))  # Si no hay sesión, redirige al login
 
     search_query = ''
+    filters = {
+        'marca': '',
+        'modelo': '',
+        'color': '',
+        'talla': '',
+        'tipo': ''
+    }
+
+    query = "SELECT * FROM Productos WHERE 1=1"
+    params = []
+
     if request.method == 'POST':
-        search_query = request.form['search']
+        search_query = request.form.get('search', '').strip()
+        filters['marca'] = request.form.get('marca', '').strip()
+        filters['modelo'] = request.form.get('modelo', '').strip()
+        filters['color'] = request.form.get('color', '').strip()
+        filters['talla'] = request.form.get('talla', '').strip()
+        filters['tipo'] = request.form.get('tipo', '').strip()
 
-    # Obtiene los productos de la base de datos
+        if search_query:
+            query += " AND (marca LIKE %s OR modelo LIKE %s OR color LIKE %s OR tipo LIKE %s)"
+            params.extend(['%' + search_query + '%'] * 4)
+        
+        if filters['marca']:
+            query += " AND marca LIKE %s"
+            params.append('%' + filters['marca'] + '%')
+        if filters['modelo']:
+            query += " AND modelo LIKE %s"
+            params.append('%' + filters['modelo'] + '%')
+        if filters['color']:
+            query += " AND color LIKE %s"
+            params.append('%' + filters['color'] + '%')
+        if filters['talla']:
+            query += " AND talla = %s"
+            params.append(filters['talla'])
+        if filters['tipo']:
+            query += " AND tipo LIKE %s"
+            params.append('%' + filters['tipo'] + '%')
+
     cursor = conexion.cursor(dictionary=True)
-    if search_query:
-        cursor.execute("SELECT * FROM Productos WHERE marca LIKE %s OR modelo LIKE %s OR color LIKE %s OR tipo LIKE %s", 
-                       ('%' + search_query + '%', '%' + search_query + '%', '%' + search_query + '%', '%' + search_query + '%'))
-    else:
-        cursor.execute("SELECT * FROM Productos")
-    productos = cursor.fetchall()  # Obtiene todos los resultados de la consulta
+    cursor.execute(query, params)
+    productos = cursor.fetchall()
+    cursor.close()
 
-    return render_template('see_products.html', productos=productos, search_query=search_query)  # Renderiza la plantilla con los productos
+    return render_template('see_products.html', productos=productos, search_query=search_query, **filters)
 
 # Inicia la aplicación Flask en modo debug
 if __name__ == '__main__':

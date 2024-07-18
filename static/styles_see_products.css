@@ -52,7 +52,7 @@ img {
 
 /* Asegurar que el contenedor permita que la imagen crezca */
 td img {
-    width: 75%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    width: 90%; /* Ajusta el ancho de la imagen al 100% del contenedor */
     max-width: 150px; /* Tamaño máximo de la imagen */
     height: auto; /* Mantener la proporción */
 }

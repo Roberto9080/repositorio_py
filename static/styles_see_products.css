@@ -131,14 +131,6 @@ td img {
     background-color: #f1f1f1;
 }
 
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #e2e6ea;
-}
-
 .button.delete-button {
     background-color: #dc3545;
     border: none;

@@ -93,3 +93,8 @@ td img {
     padding: 10px 20px;
     margin-top: 0;
 }
+
+/* Añadir margen entre los botones de búsqueda y filtros adicionales */
+.search-form .button + .button {
+    margin-left: 20px; /* Añadir un margen de 10px entre los botones */
+}

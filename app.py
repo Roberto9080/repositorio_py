@@ -150,6 +150,66 @@ def see_products():
 
     return render_template('see_products.html', productos=productos, search_query=search_query, **filters)
 
+# Ruta para editar un producto, maneja métodos GET y POST
+@app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
+def edit_product(id):
+    # Verifica si el usuario está en la sesión
+    if 'username' not in session:
+        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+
+    cursor = conexion.cursor(dictionary=True)
+    
+    if request.method == 'POST':
+        # Obtiene los datos del formulario
+        marca = request.form['marca']
+        modelo = request.form['modelo']
+        color = request.form['color']
+        existencias = int(request.form['existencias'])
+        precio = float(request.form['precio'])
+        talla = int(request.form['talla'])
+        tipo = request.form['tipo']
+        imagen = request.files['imagen']
+        
+        if imagen:
+            # Guarda la nueva imagen en el servidor
+            imagen_nombre = imagen.filename
+            imagen.save(f'static/images/{imagen_nombre}')
+        else:
+            # Si no se ha subido una nueva imagen, utiliza el nombre de la imagen existente
+            cursor.execute("SELECT imagen_nombre FROM Productos WHERE ProductoID = %s", (id,))
+            imagen_nombre = cursor.fetchone()['imagen_nombre']
+        
+        # Actualiza los datos en la base de datos
+        cursor.execute("""
+            UPDATE Productos
+            SET marca = %s, modelo = %s, color = %s, existencias = %s, precio = %s, talla = %s, tipo = %s, imagen_nombre = %s
+            WHERE ProductoID = %s
+        """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre, id))
+        conexion.commit()  # Guarda los cambios en la base de datos
+        
+        return redirect(url_for('see_products'))  # Redirige a ver productos después de editar
+
+    # Obtiene los datos del producto para mostrar en el formulario de edición
+    cursor.execute("SELECT * FROM Productos WHERE ProductoID = %s", (id,))
+    producto = cursor.fetchone()
+    cursor.close()
+
+    return render_template('edit_product.html', producto=producto)  # Renderiza la plantilla para editar productos
+
+# Ruta para eliminar un producto
+@app.route('/delete_product/<int:id>', methods=['POST'])
+def delete_product(id):
+    # Verifica si el usuario está en la sesión
+    if 'username' not in session:
+        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM Productos WHERE ProductoID = %s", (id,))
+    conexion.commit()  # Guarda los cambios en la base de datos
+    cursor.close()
+
+    return redirect(url_for('see_products'))  # Redirige a ver productos después de eliminar
+
 # Inicia la aplicación Flask en modo debug
 if __name__ == '__main__':
     app.run(debug=True)

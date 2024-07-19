@@ -10,6 +10,12 @@
     <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menu</a>
     <div class="container">
         <h1>Agregar Producto</h1>
+        
+        <!-- Mostrar el mensaje de confirmación si existe -->
+        {% if message %}
+            <p style="color: green;">{{ message }}</p>
+        {% endif %}
+
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
             <label for="marca">Marca:</label>
             <input type="text" id="marca" name="marca" required>
@@ -29,7 +35,7 @@
             <label for="talla">Talla:</label>
             <input type="number" id="talla" name="talla" required>
 
-            <label for="tipo">Tipo:</label> <!-- Nuevo campo -->
+            <label for="tipo">Tipo:</label>
             <select id="tipo" name="tipo" required>
                 <option value="Deportivo">Deportivo</option>
                 <option value="Piso">Piso</option>

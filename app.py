@@ -62,13 +62,12 @@ def logout():
     session.pop('username', None)  # Elimina el nombre de usuario de la sesión
     return redirect(url_for('login'))  # Redirige al login
 
-# Ruta para la página de agregar producto, maneja métodos GET y POST
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
-    # Verifica si el usuario está en la sesión
     if 'username' not in session:
         return redirect(url_for('login'))  # Si no hay sesión, redirige al login
 
+    message = None
     if request.method == 'POST':
         # Obtiene los datos del formulario
         marca = request.form['marca']
@@ -80,7 +79,7 @@ def add_product():
         tipo = request.form['tipo']
         imagen = request.files['imagen']
         
-        # Guarda la imagen en el servidor (opcional, puedes ajustar esta parte según tus necesidades)
+        # Guarda la imagen en el servidor
         imagen_nombre = imagen.filename
         imagen.save(f'static/images/{imagen_nombre}')
         
@@ -92,9 +91,9 @@ def add_product():
         """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre))
         conexion.commit()  # Guarda los cambios en la base de datos
         
-        return redirect(url_for('dashboard'))  # Redirige al dashboard después de agregar el producto
-
-    return render_template('add_product.html')  # Renderiza la plantilla para agregar productos
+        message = "Producto agregado exitosamente"
+    
+    return render_template('add_product.html', message=message)
 
 # Ruta para ver los productos con búsqueda y filtros adicionales
 @app.route('/see_products', methods=['GET', 'POST'])

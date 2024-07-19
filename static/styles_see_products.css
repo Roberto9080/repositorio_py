@@ -52,7 +52,7 @@ img {
 
 /* Asegurar que el contenedor permita que la imagen crezca */
 td img {
-    width: 90%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    width: 75%; /* Ajusta el ancho de la imagen al 100% del contenedor */
     max-width: 150px; /* Tamaño máximo de la imagen */
     height: auto; /* Mantener la proporción */
 }
@@ -72,6 +72,13 @@ td img {
 
 .button:hover {
     background-color: #0056b3;
+}
+
+.back-button {
+    position: absolute; /* Posiciona el botón de manera absoluta */
+    top: 40px; /* Alinea el botón a 10px del borde superior */
+    left: 10px; /* Alinea el botón a 10px del borde izquierdo */
+    margin-left: 170px; 
 }
 
 /* Estilos para la barra de búsqueda */

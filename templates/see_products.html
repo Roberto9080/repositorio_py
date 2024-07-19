@@ -10,6 +10,7 @@
     <script src="{{ url_for('static', filename='js/menu_toggle.js') }}"></script> <!-- Referencia al nuevo archivo JS -->
 </head>
 <body>
+    <a href="{{ url_for('add_product') }}" class="button back-button">Volver</a>
     <div class="container">
         <h1>Productos Disponibles</h1>
         <form action="{{ url_for('see_products') }}" method="post" class="search-form">
@@ -82,7 +83,6 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{{ url_for('dashboard') }}" class="button">Volver al Dashboard</a>
     </div>
 </body>
 </html>

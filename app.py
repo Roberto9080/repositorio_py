@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
+import re
 
 # Inicializa la aplicación Flask
 app = Flask(__name__)
@@ -68,32 +69,47 @@ def add_product():
         return redirect(url_for('login'))  # Si no hay sesión, redirige al login
 
     message = None
+    error = None
     if request.method == 'POST':
-        # Obtiene los datos del formulario
-        marca = request.form['marca']
-        modelo = request.form['modelo']
-        color = request.form['color']
-        existencias = int(request.form['existencias'])
-        precio = float(request.form['precio'])
-        talla = float(request.form['talla'])
-        tipo = request.form['tipo']
-        imagen = request.files['imagen']
-        
-        # Guarda la imagen en el servidor
-        imagen_nombre = imagen.filename
-        imagen.save(f'static/images/{imagen_nombre}')
-        
-        # Inserta los datos en la base de datos
-        cursor = conexion.cursor()
-        cursor.execute("""
-            INSERT INTO Productos (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre))
-        conexion.commit()  # Guarda los cambios en la base de datos
-        
-        message = "Producto agregado exitosamente"
+        try:
+            # Obtiene los datos del formulario
+            marca = request.form['marca']
+            modelo = request.form['modelo']
+            color = request.form['color']
+            existencias = int(request.form['existencias'])
+            precio = float(request.form['precio'])
+            talla = float(request.form['talla'])
+            tipo = request.form['tipo']
+            imagen = request.files['imagen']
+            
+            # Verifica reglas de integridad antes de insertar
+            if precio < 0 or existencias < 0 or talla < 0:
+                raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
+            if not re.match(r'^[a-zA-Z ]+$', marca) or not re.match(r'^[a-zA-Z ]+$', color):
+                raise ValueError("La marca y el color solo pueden contener letras y espacios")
+            
+            # Guarda la imagen en el servidor
+            imagen_nombre = imagen.filename
+            imagen.save(f'static/images/{imagen_nombre}')
+            
+            # Inserta los datos en la base de datos
+            cursor = conexion.cursor()
+            cursor.execute("""
+                INSERT INTO Productos (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre))
+            conexion.commit()  # Guarda los cambios en la base de datos
+            
+            message = "Producto agregado exitosamente"
+        except mysql.connector.Error as err:
+            error = f"Error en la base de datos: {err.msg}"
+        except ValueError as ve:
+            error = str(ve)
+        except Exception as e:
+            error = f"Ocurrió un error: {str(e)}"
     
-    return render_template('add_product.html', message=message)
+    return render_template('add_product.html', message=message, error=error)
+
 
 # Ruta para ver los productos con búsqueda y filtros adicionales
 @app.route('/see_products', methods=['GET', 'POST'])

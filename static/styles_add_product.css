@@ -58,6 +58,6 @@ input[type="file"] {
     position: absolute;
     top: 10px;
     left: 10px;
-    margin-left: 200px;
+    margin-left: 310px;
     margin-top: 120px;  /* Asegura que el margen superior no se aplique aquí */
 }

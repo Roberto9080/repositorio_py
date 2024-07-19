@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_add_product.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Dashboard</a>
+    <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menu</a>
     <div class="container">
         <h1>Agregar Producto</h1>
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">

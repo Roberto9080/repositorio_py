@@ -82,6 +82,9 @@ def add_product():
             tipo = request.form['tipo']
             imagen = request.files['imagen']
             
+            # Verifica si se ha subido una imagen
+            if imagen.filename == '':
+                raise ValueError("Por favor, agregue una imagen del producto")
             # Verifica reglas de integridad antes de insertar
             if precio < 0 or existencias < 0 or talla < 0:
                 raise ValueError("El precio, las existencias o la talla no pueden ser negativos")

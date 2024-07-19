@@ -34,11 +34,14 @@
                 </div>
                 <div>
                     <label for="talla">Talla:</label>
-                    <input type="number" id="talla" name="talla">
+                    <input type="number" step="0.1" id="talla" name="talla">
                 </div>
                 <div>
                     <label for="tipo">Tipo:</label>
-                    <input type="text" id="tipo" name="tipo">
+                    <select id="tipo" name="tipo" required>
+                        <option value="Deportivo">Deportivo</option>
+                        <option value="Piso">Piso</option>
+                    </select>
                 </div>
                 <button type="submit" class="button">Aplicar Filtros</button>
             </form>

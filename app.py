@@ -75,7 +75,7 @@ def add_product():
         color = request.form['color']
         existencias = int(request.form['existencias'])
         precio = float(request.form['precio'])
-        talla = int(request.form['talla'])
+        talla = float(request.form['talla'])
         tipo = request.form['tipo']
         imagen = request.files['imagen']
         
@@ -165,7 +165,7 @@ def edit_product(id):
         color = request.form['color']
         existencias = int(request.form['existencias'])
         precio = float(request.form['precio'])
-        talla = int(request.form['talla'])
+        talla = float(request.form['talla'])
         tipo = request.form['tipo']
         imagen = request.files['imagen']
         

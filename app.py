@@ -213,7 +213,7 @@ def edit_product(id):
             """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre, id))
             conexion.commit()  # Guarda los cambios en la base de datos
             
-            message = "Producto editado exitosamente"
+            message = "Se editó el producto correctamente"
         except mysql.connector.Error as err:
             error = f"Error en la base de datos: {err.msg}"
         except ValueError as ve:

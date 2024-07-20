@@ -106,3 +106,17 @@ input[type="file"] {
 .btn-secondary:hover {
     background-color: #da190b;
 }
+
+/* Estilos para los mensajes de error y confirmación */
+.message {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.message.success {
+    color: green;
+}
+
+.message.error {
+    color: red;
+}

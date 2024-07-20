@@ -171,48 +171,63 @@ def see_products():
 # Ruta para editar un producto, maneja métodos GET y POST
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
 def edit_product(id):
-    # Verifica si el usuario está en la sesión
     if 'username' not in session:
         return redirect(url_for('login'))  # Si no hay sesión, redirige al login
 
+    message = None
+    error = None
     cursor = conexion.cursor(dictionary=True)
     
     if request.method == 'POST':
-        # Obtiene los datos del formulario
-        marca = request.form['marca']
-        modelo = request.form['modelo']
-        color = request.form['color']
-        existencias = int(request.form['existencias'])
-        precio = float(request.form['precio'])
-        talla = float(request.form['talla'])
-        tipo = request.form['tipo']
-        imagen = request.files['imagen']
-        
-        if imagen:
-            # Guarda la nueva imagen en el servidor
-            imagen_nombre = imagen.filename
-            imagen.save(f'static/images/{imagen_nombre}')
-        else:
-            # Si no se ha subido una nueva imagen, utiliza el nombre de la imagen existente
-            cursor.execute("SELECT imagen_nombre FROM Productos WHERE ProductoID = %s", (id,))
-            imagen_nombre = cursor.fetchone()['imagen_nombre']
-        
-        # Actualiza los datos en la base de datos
-        cursor.execute("""
-            UPDATE Productos
-            SET marca = %s, modelo = %s, color = %s, existencias = %s, precio = %s, talla = %s, tipo = %s, imagen_nombre = %s
-            WHERE ProductoID = %s
-        """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre, id))
-        conexion.commit()  # Guarda los cambios en la base de datos
-        
-        return redirect(url_for('see_products'))  # Redirige a ver productos después de editar
-
+        try:
+            # Obtiene los datos del formulario
+            marca = request.form['marca']
+            modelo = request.form['modelo']
+            color = request.form['color']
+            existencias = int(request.form['existencias'])
+            precio = float(request.form['precio'])
+            talla = float(request.form['talla'])
+            tipo = request.form['tipo']
+            imagen = request.files['imagen']
+            
+            # Verifica reglas de integridad antes de actualizar
+            if precio < 0 or existencias < 0 or talla < 0:
+                raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
+            if not re.match(r'^[a-zA-Z ]+$', marca) or not re.match(r'^[a-zA-Z ]+$', color):
+                raise ValueError("La marca y el color solo pueden contener letras y espacios")
+            
+            if imagen:
+                # Guarda la nueva imagen en el servidor
+                imagen_nombre = imagen.filename
+                imagen.save(f'static/images/{imagen_nombre}')
+            else:
+                # Si no se ha subido una nueva imagen, utiliza el nombre de la imagen existente
+                cursor.execute("SELECT imagen_nombre FROM Productos WHERE ProductoID = %s", (id,))
+                imagen_nombre = cursor.fetchone()['imagen_nombre']
+            
+            # Actualiza los datos en la base de datos
+            cursor.execute("""
+                UPDATE Productos
+                SET marca = %s, modelo = %s, color = %s, existencias = %s, precio = %s, talla = %s, tipo = %s, imagen_nombre = %s
+                WHERE ProductoID = %s
+            """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre, id))
+            conexion.commit()  # Guarda los cambios en la base de datos
+            
+            message = "Producto editado exitosamente"
+        except mysql.connector.Error as err:
+            error = f"Error en la base de datos: {err.msg}"
+        except ValueError as ve:
+            error = str(ve)
+        except Exception as e:
+            error = f"Ocurrió un error: {str(e)}"
+    
     # Obtiene los datos del producto para mostrar en el formulario de edición
     cursor.execute("SELECT * FROM Productos WHERE ProductoID = %s", (id,))
     producto = cursor.fetchone()
     cursor.close()
 
-    return render_template('edit_product.html', producto=producto)  # Renderiza la plantilla para editar productos
+    return render_template('edit_product.html', producto=producto, message=message, error=error)
+
 
 # Ruta para eliminar un producto
 @app.route('/delete_product/<int:id>', methods=['POST'])

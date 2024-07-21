@@ -15,6 +15,11 @@ conexion = mysql.connector.connect(
     port="3306"
 )
 
+# Función para verificar si el usuario ha iniciado sesión
+def verificar_sesion():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
 # Ruta para la página de inicio, redirige a la página de login
 @app.route('/')
 def home():
@@ -51,11 +56,10 @@ def login():
 # Ruta para la página del dashboard
 @app.route('/dashboard')
 def dashboard():
-    # Verifica si el usuario está en la sesión
-    if 'username' in session:
-        return render_template('dashboard.html', username=session['username'])
-    else:
-        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+    # Verifica si el usuario ha iniciado sesión
+    if verificar_sesion():
+        return verificar_sesion()
+    return render_template('dashboard.html', username=session['username'])
 
 # Ruta para cerrar la sesión
 @app.route('/logout')
@@ -65,8 +69,8 @@ def logout():
 
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+    if verificar_sesion():
+        return verificar_sesion()
 
     message = None
     error = None
@@ -124,9 +128,8 @@ def add_product():
 # Ruta para ver los productos con búsqueda y filtros adicionales
 @app.route('/see_products', methods=['GET', 'POST'])
 def see_products():
-    # Verifica si el usuario está en la sesión
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+    if verificar_sesion():
+        return verificar_sesion()
 
     search_query = ''
     filters = {
@@ -178,8 +181,8 @@ def see_products():
 # Ruta para editar un producto, maneja métodos GET y POST
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
 def edit_product(id):
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+    if verificar_sesion():
+        return verificar_sesion()
 
     message = None
     error = None
@@ -239,9 +242,8 @@ def edit_product(id):
 # Ruta para eliminar un producto
 @app.route('/delete_product/<int:id>', methods=['POST'])
 def delete_product(id):
-    # Verifica si el usuario está en la sesión
-    if 'username' not in session:
-        return redirect(url_for('login'))  # Si no hay sesión, redirige al login
+    if verificar_sesion():
+        return verificar_sesion()
 
     cursor = conexion.cursor()
     cursor.execute("DELETE FROM Productos WHERE ProductoID = %s", (id,))

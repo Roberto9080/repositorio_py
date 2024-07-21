@@ -70,6 +70,8 @@ def add_product():
 
     message = None
     error = None
+    form_data = {}  # Diccionario para almacenar los valores del formulario
+
     if request.method == 'POST':
         try:
             # Obtiene los datos del formulario
@@ -81,7 +83,7 @@ def add_product():
             talla = float(request.form['talla'])
             tipo = request.form['tipo']
             imagen = request.files['imagen']
-            
+
             # Verifica si se ha subido una imagen
             if imagen.filename == '':
                 raise ValueError("Por favor, agregue una imagen del producto")
@@ -90,11 +92,11 @@ def add_product():
                 raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
             if not re.match(r'^[a-zA-Z ]+$', marca) or not re.match(r'^[a-zA-Z ]+$', color):
                 raise ValueError("La marca y el color solo pueden contener letras y espacios")
-            
+
             # Guarda la imagen en el servidor
             imagen_nombre = imagen.filename
             imagen.save(f'static/images/{imagen_nombre}')
-            
+
             # Inserta los datos en la base de datos
             cursor = conexion.cursor()
             cursor.execute("""
@@ -102,16 +104,21 @@ def add_product():
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (marca, modelo, color, existencias, precio, talla, tipo, imagen_nombre))
             conexion.commit()  # Guarda los cambios en la base de datos
-            
+
             message = "Producto agregado exitosamente"
+            form_data = {}  # Limpia los datos del formulario después de una inserción exitosa
         except mysql.connector.Error as err:
             error = f"Error en la base de datos: {err.msg}"
+            form_data = request.form
         except ValueError as ve:
             error = str(ve)
+            form_data = request.form
         except Exception as e:
             error = f"Ocurrió un error: {str(e)}"
-    
-    return render_template('add_product.html', message=message, error=error)
+            form_data = request.form
+
+    return render_template('add_product.html', message=message, error=error, form_data=form_data)
+
 
 
 # Ruta para ver los productos con búsqueda y filtros adicionales

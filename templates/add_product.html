@@ -21,30 +21,29 @@
             <p style="color: red;">{{ error }}</p>
         {% endif %}
 
-
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
             <label for="marca">Marca:</label>
-            <input type="text" id="marca" name="marca" required>
+            <input type="text" id="marca" name="marca" value="{{ form_data['marca'] if 'marca' in form_data else '' }}" required>
 
             <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" name="modelo" required>
+            <input type="text" id="modelo" name="modelo" value="{{ form_data['modelo'] if 'modelo' in form_data else '' }}" required>
 
             <label for="color">Color:</label>
-            <input type="text" id="color" name="color" required>
+            <input type="text" id="color" name="color" value="{{ form_data['color'] if 'color' in form_data else '' }}" required>
 
             <label for="existencias">Existencias:</label>
-            <input type="number" id="existencias" name="existencias" required>
+            <input type="number" id="existencias" name="existencias" value="{{ form_data['existencias'] if 'existencias' in form_data else '' }}" required>
 
             <label for="precio">Precio:</label>
-            <input type="number" step="0.01" id="precio" name="precio" required>
+            <input type="number" step="0.01" id="precio" name="precio" value="{{ form_data['precio'] if 'precio' in form_data else '' }}" required>
 
             <label for="talla">Talla:</label>
-            <input type="number" step="0.1" id="talla" name="talla" required>
+            <input type="number" step="0.1" id="talla" name="talla" value="{{ form_data['talla'] if 'talla' in form_data else '' }}" required>
 
             <label for="tipo">Tipo:</label>
             <select id="tipo" name="tipo" required>
-                <option value="Deportivo">Deportivo</option>
-                <option value="Piso">Piso</option>
+                <option value="Deportivo" {% if form_data['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
+                <option value="Piso" {% if form_data['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
             </select>
 
             <label for="imagen">Imagen:</label>

@@ -49,10 +49,13 @@
             </form>
         </div>
         <div id="order-options" style="display:none;">
-            <a href="{{ url_for('see_products', order='precio') }}" class="button">Por Precio</a>
-            <a href="{{ url_for('see_products', order='existencias') }}" class="button">Por Existencias</a>
-            <a href="{{ url_for('see_products', order='marca') }}" class="button">Por Marca</a>
-        </div>
+            <a href="{{ url_for('see_products', search=search_query, order='precio_asc') }}" class="button">Precio más bajo <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search=search_query, order='precio_desc') }}" class="button">Precio más alto <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('see_products', search=search_query, order='existencias_asc') }}" class="button">Existencias más bajas <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search=search_query, order='existencias_desc') }}" class="button">Existencias más altas <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('see_products', search=search_query, order='marca_asc') }}" class="button">Marca de la A-Z <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search=search_query, order='marca_desc') }}" class="button">Marca de la Z-A <i class="fas fa-arrow-up"></i></a>
+        </div>               
         <table>
             <thead>
                 <tr>

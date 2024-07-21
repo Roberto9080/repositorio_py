@@ -136,9 +136,9 @@ def see_products():
         'talla': '',
         'tipo': ''
     }
-    order_by = request.args.get('order', 'marca')  # Obtener el parámetro de ordenamiento
+    order_by = request.args.get('order', 'marca_asc')  # Obtener el parámetro de ordenamiento
 
-    query = f"SELECT * FROM Productos WHERE 1=1"
+    query = "SELECT * FROM Productos WHERE 1=1"
     params = []
 
     if request.method == 'POST':
@@ -169,7 +169,19 @@ def see_products():
             query += " AND tipo LIKE %s"
             params.append('%' + filters['tipo'] + '%')
 
-    query += f" ORDER BY {order_by}"  # Añadir el ordenamiento a la consulta
+    # Mapear el parámetro de ordenamiento a la cláusula ORDER BY
+    order_map = {
+        'precio_asc': 'precio ASC',
+        'precio_desc': 'precio DESC',
+        'existencias_asc': 'existencias ASC',
+        'existencias_desc': 'existencias DESC',
+        'marca_asc': 'marca ASC',
+        'marca_desc': 'marca DESC'
+    }
+
+    # Obtener el orden por defecto si no se encuentra el parámetro
+    order_clause = order_map.get(order_by, 'marca ASC')
+    query += f" ORDER BY {order_clause}"
 
     cursor = conexion.cursor(dictionary=True)
     cursor.execute(query, params)

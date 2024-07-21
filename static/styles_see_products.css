@@ -169,7 +169,8 @@ td img {
 }
 
 #order-options a {
-    display: block;
+    display: flex;
+    align-items: center;
     padding: 10px 15px;
     color: #333;
     text-decoration: none;
@@ -182,31 +183,8 @@ td img {
     color: white;
 }
 
-.button.order-button {
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    position: relative;
-    display: inline-block;
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-.button.order-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-.button.order-button:focus {
-    outline: none;
-}
-
-.button.order-button .icon {
-    margin-right: 8px;
-    font-size: 16px;
+#order-options .fa-arrow-up, #order-options .fa-arrow-down {
+    margin-left: 8px;
 }
 
 /* Estilos adicionales para mejorar la visibilidad */

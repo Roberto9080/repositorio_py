@@ -123,9 +123,6 @@ def add_product():
 
     return render_template('add_product.html', message=message, error=error, form_data=form_data)
 
-
-
-# Ruta para ver los productos con búsqueda y filtros adicionales
 @app.route('/see_products', methods=['GET', 'POST'])
 def see_products():
     if verificar_sesion():
@@ -139,8 +136,9 @@ def see_products():
         'talla': '',
         'tipo': ''
     }
+    order_by = request.args.get('order', 'marca')  # Obtener el parámetro de ordenamiento
 
-    query = "SELECT * FROM Productos WHERE 1=1"
+    query = f"SELECT * FROM Productos WHERE 1=1"
     params = []
 
     if request.method == 'POST':
@@ -171,12 +169,15 @@ def see_products():
             query += " AND tipo LIKE %s"
             params.append('%' + filters['tipo'] + '%')
 
+    query += f" ORDER BY {order_by}"  # Añadir el ordenamiento a la consulta
+
     cursor = conexion.cursor(dictionary=True)
     cursor.execute(query, params)
     productos = cursor.fetchall()
     cursor.close()
 
     return render_template('see_products.html', productos=productos, search_query=search_query, **filters)
+
 
 # Ruta para editar un producto, maneja métodos GET y POST
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])

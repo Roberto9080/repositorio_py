@@ -128,13 +128,13 @@ def see_products():
     if verificar_sesion():
         return verificar_sesion()
 
-    search_query = ''
+    search_query = request.args.get('search_query', '')
     filters = {
-        'marca': '',
-        'modelo': '',
-        'color': '',
-        'talla': '',
-        'tipo': ''
+        'marca': request.args.get('marca', ''),
+        'modelo': request.args.get('modelo', ''),
+        'color': request.args.get('color', ''),
+        'talla': request.args.get('talla', ''),
+        'tipo': request.args.get('tipo', '')
     }
     order_by = request.args.get('order', 'marca_asc')  # Obtener el parámetro de ordenamiento
 
@@ -149,47 +149,46 @@ def see_products():
         filters['talla'] = request.form.get('talla', '').strip()
         filters['tipo'] = request.form.get('tipo', '').strip()
 
-        if search_query:
-            query += " AND (marca LIKE %s OR modelo LIKE %s OR color LIKE %s OR tipo LIKE %s)"
-            params.extend(['%' + search_query + '%'] * 4)
-        
-        if filters['marca']:
-            query += " AND marca LIKE %s"
-            params.append('%' + filters['marca'] + '%')
-        if filters['modelo']:
-            query += " AND modelo LIKE %s"
-            params.append('%' + filters['modelo'] + '%')
-        if filters['color']:
-            query += " AND color LIKE %s"
-            params.append('%' + filters['color'] + '%')
-        if filters['talla']:
-            query += " AND talla = %s"
-            params.append(filters['talla'])
-        if filters['tipo']:
-            query += " AND tipo LIKE %s"
-            params.append('%' + filters['tipo'] + '%')
+    if search_query:
+        query += " AND (marca LIKE %s OR modelo LIKE %s OR color LIKE %s OR tipo LIKE %s)"
+        params.extend(['%' + search_query + '%'] * 4)
+    
+    if filters['marca']:
+        query += " AND marca LIKE %s"
+        params.append('%' + filters['marca'] + '%')
+    if filters['modelo']:
+        query += " AND modelo LIKE %s"
+        params.append('%' + filters['modelo'] + '%')
+    if filters['color']:
+        query += " AND color LIKE %s"
+        params.append('%' + filters['color'] + '%')
+    if filters['talla']:
+        query += " AND talla LIKE %s"
+        params.append('%' + filters['talla'] + '%')
+    if filters['tipo']:
+        query += " AND tipo LIKE %s"
+        params.append('%' + filters['tipo'] + '%')
 
-    # Mapear el parámetro de ordenamiento a la cláusula ORDER BY
-    order_map = {
-        'precio_asc': 'precio ASC',
-        'precio_desc': 'precio DESC',
-        'existencias_asc': 'existencias ASC',
-        'existencias_desc': 'existencias DESC',
-        'marca_asc': 'marca ASC',
-        'marca_desc': 'marca DESC'
-    }
-
-    # Obtener el orden por defecto si no se encuentra el parámetro
-    order_clause = order_map.get(order_by, 'marca ASC')
-    query += f" ORDER BY {order_clause}"
+    # Añadir ordenamiento
+    if order_by == 'precio_asc':
+        query += " ORDER BY precio ASC"
+    elif order_by == 'precio_desc':
+        query += " ORDER BY precio DESC"
+    elif order_by == 'existencias_asc':
+        query += " ORDER BY existencias ASC"
+    elif order_by == 'existencias_desc':
+        query += " ORDER BY existencias DESC"
+    elif order_by == 'marca_asc':
+        query += " ORDER BY marca ASC"
+    elif order_by == 'marca_desc':
+        query += " ORDER BY marca DESC"
 
     cursor = conexion.cursor(dictionary=True)
-    cursor.execute(query, params)
+    cursor.execute(query, tuple(params))
     productos = cursor.fetchall()
     cursor.close()
 
-    return render_template('see_products.html', productos=productos, search_query=search_query, **filters)
-
+    return render_template('see_products.html', productos=productos, search_query=search_query, order_by=order_by, filters=filters)
 
 # Ruta para editar un producto, maneja métodos GET y POST
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
@@ -250,7 +249,6 @@ def edit_product(id):
     cursor.close()
 
     return render_template('edit_product.html', producto=producto, message=message, error=error)
-
 
 # Ruta para eliminar un producto
 @app.route('/delete_product/<int:id>', methods=['POST'])

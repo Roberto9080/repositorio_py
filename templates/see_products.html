@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="{{ url_for('static', filename='js/filtro.js') }}"></script>
     <script src="{{ url_for('static', filename='js/menu_toggle.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/order_options.js') }}"></script> <!-- Referencia al nuevo archivo JS -->
+    <script src="{{ url_for('static', filename='js/order_options.js') }}"></script>
 </head>
 <body>
     <a href="{{ url_for('add_product') }}" class="button back-button">Volver</a>
@@ -24,38 +24,38 @@
             <form action="{{ url_for('see_products') }}" method="post" class="filter-form">
                 <div>
                     <label for="marca">Marca:</label>
-                    <input type="text" id="marca" name="marca">
+                    <input type="text" id="marca" name="marca" value="{{ filters['marca'] }}">
                 </div>
                 <div>
                     <label for="modelo">Modelo:</label>
-                    <input type="text" id="modelo" name="modelo">
+                    <input type="text" id="modelo" name="modelo" value="{{ filters['modelo'] }}">
                 </div>
                 <div>
                     <label for="color">Color:</label>
-                    <input type="text" id="color" name="color">
+                    <input type="text" id="color" name="color" value="{{ filters['color'] }}">
                 </div>
                 <div>
                     <label for="talla">Talla:</label>
-                    <input type="number" step="0.1" id="talla" name="talla">
+                    <input type="number" step="0.1" id="talla" name="talla" value="{{ filters['talla'] }}">
                 </div>
                 <div>
                     <label for="tipo">Tipo:</label>
                     <select id="tipo" name="tipo" required>
-                        <option value="Deportivo">Deportivo</option>
-                        <option value="Piso">Piso</option>
+                        <option value="Deportivo" {% if filters['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
+                        <option value="Piso" {% if filters['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
                     </select>
                 </div>
                 <button type="submit" class="button">Aplicar Filtros</button>
             </form>
         </div>
         <div id="order-options" style="display:none;">
-            <a href="{{ url_for('see_products', search=search_query, order='precio_asc') }}" class="button">Precio más bajo <i class="fas fa-arrow-down"></i></a>
-            <a href="{{ url_for('see_products', search=search_query, order='precio_desc') }}" class="button">Precio más alto <i class="fas fa-arrow-up"></i></a>
-            <a href="{{ url_for('see_products', search=search_query, order='existencias_asc') }}" class="button">Existencias más bajas <i class="fas fa-arrow-down"></i></a>
-            <a href="{{ url_for('see_products', search=search_query, order='existencias_desc') }}" class="button">Existencias más altas <i class="fas fa-arrow-up"></i></a>
-            <a href="{{ url_for('see_products', search=search_query, order='marca_asc') }}" class="button">Marca de la A-Z <i class="fas fa-arrow-down"></i></a>
-            <a href="{{ url_for('see_products', search=search_query, order='marca_desc') }}" class="button">Marca de la Z-A <i class="fas fa-arrow-up"></i></a>
-        </div>               
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='precio_asc') }}" class="button">Precio más bajo <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='precio_desc') }}" class="button">Precio más alto <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='existencias_asc') }}" class="button">Existencias más bajas <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='existencias_desc') }}" class="button">Existencias más altas <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='marca_asc') }}" class="button">Marca de la A-Z <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('see_products', search_query=search_query, marca=filters['marca'], modelo=filters['modelo'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='marca_desc') }}" class="button">Marca de la Z-A <i class="fas fa-arrow-up"></i></a>
+        </div>
         <table>
             <thead>
                 <tr>

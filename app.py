@@ -96,6 +96,9 @@ def add_product():
                 raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
             if not re.match(r'^[a-zA-Z ]+$', marca) or not re.match(r'^[a-zA-Z ]+$', color):
                 raise ValueError("La marca y el color solo pueden contener letras y espacios")
+            # Asignar el valor de marca al modelo si el modelo está vacío
+            if not modelo:
+                modelo = marca
 
             # Guarda la imagen en el servidor
             imagen_nombre = imagen.filename
@@ -217,6 +220,9 @@ def edit_product(id):
                 raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
             if not re.match(r'^[a-zA-Z ]+$', marca) or not re.match(r'^[a-zA-Z ]+$', color):
                 raise ValueError("La marca y el color solo pueden contener letras y espacios")
+            # Asignar el valor de marca al modelo si el modelo está vacío
+            if not modelo:
+                modelo = marca
             
             if imagen:
                 # Guarda la nueva imagen en el servidor

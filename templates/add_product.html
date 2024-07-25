@@ -22,7 +22,7 @@
         {% endif %}
 
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
-            <label for="marca"> Seleccione una Marca:</label>
+            <label for="marca">Seleccione una Marca:</label>
             <select id="marca" name="marca" required>
                 <option value="" disabled selected></option>
                 <option value="Nike" {% if form_data['marca'] == 'Nike' %}selected{% endif %}>Nike</option>
@@ -49,8 +49,14 @@
             <label for="precio">Precio:</label>
             <input type="number" step="0.01" id="precio" name="precio" value="{{ form_data['precio'] if 'precio' in form_data else '' }}" required>
 
-            <label for="talla">Talla:</label>
-            <input type="number" step="0.1" id="talla" name="talla" value="{{ form_data['talla'] if 'talla' in form_data else '' }}" required>
+            <label for="talla">Seleccione una Talla:</label>
+            <select id="talla" name="talla" required>
+                <option value="" disabled selected></option>
+                {% for i in range(11, 34) %}
+                    <option value="{{ i }}" {% if form_data['talla'] == i %}selected{% endif %}>{{ i }} cm</option>
+                    <option value="{{ i + 0.5 }}" {% if form_data['talla'] == i + 0.5 %}selected{% endif %}>{{ i + 0.5 }} cm</option>
+                {% endfor %}
+            </select>
 
             <label for="tipo">Seleccione el Tipo:</label>
             <select id="tipo" name="tipo" required>

@@ -22,8 +22,20 @@
         {% endif %}
 
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
-            <label for="marca">Marca:</label>
-            <input type="text" id="marca" name="marca" value="{{ form_data['marca'] if 'marca' in form_data else '' }}" required>
+            <label for="marca"> Seleccione una Marca:</label>
+            <select id="marca" name="marca" required>
+                <option value="" disabled selected></option>
+                <option value="Nike" {% if form_data['marca'] == 'Nike' %}selected{% endif %}>Nike</option>
+                <option value="Puma" {% if form_data['marca'] == 'Puma' %}selected{% endif %}>Puma</option>
+                <option value="Under Armour" {% if form_data['marca'] == 'Under Armour' %}selected{% endif %}>Under Armour</option>
+                <option value="Adidas" {% if form_data['marca'] == 'Adidas' %}selected{% endif %}>Adidas</option>
+                <option value="Asics" {% if form_data['marca'] == 'Asics' %}selected{% endif %}>Asics</option>
+                <option value="Lacoste" {% if form_data['marca'] == 'Lacoste' %}selected{% endif %}>Lacoste</option>
+                <option value="Tommy Hilfiger" {% if form_data['marca'] == 'Tommy Hilfiger' %}selected{% endif %}>Tommy Hilfiger</option>
+                <option value="Reebok" {% if form_data['marca'] == 'Reebok' %}selected{% endif %}>Reebok</option>
+                <option value="Hoka" {% if form_data['marca'] == 'Hoka' %}selected{% endif %}>Hoka</option>
+                <option value="Caterpillar" {% if form_data['marca'] == 'Caterpillar' %}selected{% endif %}>Caterpillar</option>
+            </select>
 
             <label for="modelo">Modelo:</label>
             <input type="text" id="modelo" name="modelo" value="{{ form_data['modelo'] if 'modelo' in form_data else '' }}">
@@ -40,8 +52,9 @@
             <label for="talla">Talla:</label>
             <input type="number" step="0.1" id="talla" name="talla" value="{{ form_data['talla'] if 'talla' in form_data else '' }}" required>
 
-            <label for="tipo">Tipo:</label>
+            <label for="tipo">Seleccione el Tipo:</label>
             <select id="tipo" name="tipo" required>
+                <option value="" disabled selected></option>
                 <option value="Deportivo" {% if form_data['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
                 <option value="Piso" {% if form_data['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
             </select>

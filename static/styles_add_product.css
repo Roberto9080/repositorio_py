@@ -27,13 +27,39 @@ label {
 
 input[type="text"],
 input[type="number"],
-input[type="file"] {
+input[type="file"],
+select {
     width: 90%;
     padding: 8px;
     margin-top: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+select {
+    background-color: #fff;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+option {
+    background-color: #fff;
+    color: #333;
+    padding: 8px;
+}
+
+option[disabled] {
+    color: #999;
 }
 
 .button {
@@ -53,11 +79,10 @@ input[type="file"] {
     background-color: #0056b3;
 }
 
-/* Estilos para posicionar el botón en la esquina superior izquierda */
 .dashboard-button {
     position: absolute;
     top: 10px;
     left: 10px;
     margin-left: 310px;
-    margin-top: 120px;  /* Asegura que el margen superior no se aplique aquí */
+    margin-top: 120px;
 }

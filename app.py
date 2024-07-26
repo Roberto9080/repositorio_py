@@ -2,6 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 import re
 
+# Importar Blueprints
+from modulos.clientes import clientes_bp
+from modulos.abonos import abonos_bp
+from modulos.ventas import ventas_bp
+
 # Inicializa la aplicación Flask
 app = Flask(__name__)
 app.secret_key = 'tu_secreto'  # Necesario para manejar sesiones
@@ -14,6 +19,11 @@ conexion = mysql.connector.connect(
     database="Proyecto",
     port="3306"
 )
+
+# Registrar Blueprints
+app.register_blueprint(clientes_bp, url_prefix='/clientes')
+app.register_blueprint(abonos_bp)
+app.register_blueprint(ventas_bp)
 
 # Función para verificar si el usuario ha iniciado sesión
 def verificar_sesion():

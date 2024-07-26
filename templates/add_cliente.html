@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Cliente</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_add_cliente.css') }}">
+</head>
+<body>
+    <form action="{{ url_for('clientes.add_cliente') }}" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required pattern="[a-zA-Z ]+">
+
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" required pattern="[a-zA-Z ]+">
+
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio" required pattern="[a-zA-Z0-9 ]+">
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" required pattern="[0-9]{10}">
+
+        <button type="submit">Agregar Cliente</button>
+    </form>
+</body>
+</html>

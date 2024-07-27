@@ -124,3 +124,70 @@ def see_clientes():
 
     return render_template('see_clientes.html', clientes=clientes, search_query=search_query, filters=filters)
 
+# Ruta para editar un cliente
+@clientes_bp.route('/edit_cliente/<int:id>', methods=['GET', 'POST'])
+def edit_cliente(id):
+    if verificar_sesion():
+        return verificar_sesion()
+
+    message = None
+    error = None
+    conexion = obtener_conexion()
+    cursor = conexion.cursor(dictionary=True)
+    
+    if request.method == 'POST':
+        try:
+            # Obtiene los datos del formulario
+            nombre = request.form['nombre']
+            apellido = request.form['apellido']
+            domicilio = request.form['domicilio']
+            telefono = request.form['telefono']
+            
+            # Verifica reglas de integridad antes de actualizar
+            if not re.match(r'^[a-zA-Z ]+$', nombre) or not re.match(r'^[a-zA-Z ]+$', apellido):
+                raise ValueError("El nombre y el apellido solo pueden contener letras y espacios")
+            if not re.match(r'^[a-zA-Z0-9 ]+$', domicilio):
+                raise ValueError("El domicilio solo puede contener letras, números y espacios")
+            if not re.match(r'^\d{10}$', telefono):
+                raise ValueError("El teléfono debe ser un número de exactamente 10 dígitos")
+            
+            # Actualiza los datos en la base de datos
+            cursor.execute("""
+                UPDATE Cliente
+                SET Nombre = %s, Apellido = %s, Domicilio = %s, Telefono = %s
+                WHERE ClienteID = %s
+            """, (nombre, apellido, domicilio, telefono, id))
+            conexion.commit()  # Guarda los cambios en la base de datos
+            
+            message = "Se editó el cliente correctamente"
+        except mysql.connector.Error as err:
+            error = f"Error en la base de datos: {err.msg}"
+        except ValueError as ve:
+            error = str(ve)
+        except Exception as e:
+            error = f"Ocurrió un error: {str(e)}"
+    
+    # Obtiene los datos del cliente para mostrar en el formulario de edición
+    cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (id,))
+    cliente = cursor.fetchone()
+    cursor.close()
+    conexion.close()
+
+    return render_template('edit_cliente.html', cliente=cliente, message=message, error=error)
+
+
+# Ruta para eliminar un cliente
+@clientes_bp.route('/delete_cliente/<int:id>', methods=['POST'])
+def delete_cliente(id):
+    if verificar_sesion():
+        return verificar_sesion()
+    
+    conexion = obtener_conexion()
+    cursor = conexion.cursor()
+    cursor.execute("DELETE FROM Cliente WHERE ClienteID = %s", (id,))
+    conexion.commit()
+    cursor.close()
+    conexion.close()
+    
+    flash('Cliente eliminado correctamente')
+    return redirect(url_for('clientes.see_clientes'))

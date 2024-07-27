@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Clientes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_see_clientes.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="{{ url_for('static', filename='js/filtro.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu_toggle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/order_options.js') }}"></script>
+</head>
+<body>
+    <a href="{{ url_for('clientes.add_cliente') }}" class="button back-button">Volver</a>
+    <div class="container">
+        <h1>Clientes Registrados</h1>
+        <form action="{{ url_for('clientes.see_clientes') }}" method="post" class="search-form">
+            <input type="text" name="search" placeholder="Buscar clientes..." value="{{ search_query }}">
+            <button type="submit" class="button">Buscar</button>
+            <button type="button" class="button" onclick="toggleFilters()">Filtros Adicionales</button>
+            <button type="button" class="button" onclick="showOrderOptions()">Ordenar</button>
+        </form>
+        <div id="additionalFilters" style="display: none;">
+            <form action="{{ url_for('clientes.see_clientes') }}" method="post" class="filter-form">
+                <div>
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="{{ filters['nombre'] }}">
+                </div>
+                <div>
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" id="apellido" name="apellido" value="{{ filters['apellido'] }}">
+                </div>
+                <div>
+                    <label for="domicilio">Domicilio:</label>
+                    <input type="text" id="domicilio" name="domicilio" value="{{ filters['domicilio'] }}">
+                </div>
+                <div>
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="{{ filters['telefono'] }}">
+                </div>
+                <button type="submit" class="button">Aplicar Filtros</button>
+            </form>
+        </div>
+        <div id="order-options" style="display:none;">
+            <a href="{{ url_for('clientes.see_clientes', order='nombre_asc') }}" class="button">Nombre A-Z <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('clientes.see_clientes', order='nombre_desc') }}" class="button">Nombre Z-A <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('clientes.see_clientes', order='apellido_asc') }}" class="button">Apellido A-Z <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('clientes.see_clientes', order='apellido_desc') }}" class="button">Apellido Z-A <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('clientes.see_clientes', order='domicilio_asc') }}" class="button">Domicilio A-Z <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('clientes.see_clientes', order='domicilio_desc') }}" class="button">Domicilio Z-A <i class="fas fa-arrow-up"></i></a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Domicilio</th>
+                    <th>Teléfono</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.Nombre }}</td>
+                    <td>{{ cliente.Apellido }}</td>
+                    <td>{{ cliente.Domicilio }}</td>
+                    <td>{{ cliente.Telefono }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

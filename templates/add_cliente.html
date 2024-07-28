@@ -7,32 +7,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_add_cliente.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menu</a>
+    <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menú</a>
     <div class="container">
         <h1>Agregar Cliente</h1>
-        
-        <!-- Mostrar el mensaje de confirmación si existe -->
-        {% if message %}
-            <p style="color: green;">{{ message }}</p>
-        {% endif %}
 
         <!-- Mostrar el mensaje de error si existe -->
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <!-- Mostrar el mensaje de confirmación si existe -->
+        {% if message %}
+            <div class="success">{{ message }}</div>
         {% endif %}
 
         <form action="{{ url_for('clientes.add_cliente') }}" method="post">
             <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="{{ form_data['nombre'] if 'nombre' in form_data else '' }}" required pattern="[a-zA-Z ]+">
+            <input type="text" id="nombre" name="nombre" value="{{ form_data['nombre'] if 'nombre' in form_data else '' }}" required>
 
             <label for="apellido">Apellido:</label>
-            <input type="text" id="apellido" name="apellido" value="{{ form_data['apellido'] if 'apellido' in form_data else '' }}" required pattern="[a-zA-Z ]+">
+            <input type="text" id="apellido" name="apellido" value="{{ form_data['apellido'] if 'apellido' in form_data else '' }}"required>
 
             <label for="domicilio">Domicilio:</label>
-            <input type="text" id="domicilio" name="domicilio" value="{{ form_data['domicilio'] if 'domicilio' in form_data else '' }}" required pattern="[a-zA-Z0-9 ]+">
+            <input type="text" id="domicilio" name="domicilio" value="{{ form_data['domicilio'] if 'domicilio' in form_data else '' }}" required>
 
             <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" name="telefono" value="{{ form_data['telefono'] if 'telefono' in form_data else '' }}" required pattern="[0-9]{10}">
+            <input type="text" id="telefono" name="telefono" value="{{ form_data['telefono'] if 'telefono' in form_data else '' }}" required>
 
             <button type="submit" class="button">Agregar Cliente</button>
             <a href="{{ url_for('clientes.see_clientes') }}" class="button">Ver Clientes</a>

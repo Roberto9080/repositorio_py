@@ -20,48 +20,57 @@ def verificar_sesion():
     if 'username' not in session:
         return redirect(url_for('login'))
 
-# Ruta para agregar clientes
 @clientes_bp.route('/add_cliente', methods=['GET', 'POST'])
 def add_cliente():
     if verificar_sesion():
         return verificar_sesion()
 
+    message = None
+    error = None
+    form_data = {}  # Diccionario para almacenar los valores del formulario
+
     if request.method == 'POST':
-        nombre = request.form['nombre']
-        apellido = request.form['apellido']
-        domicilio = request.form['domicilio']
-        telefono = request.form['telefono']
+        try:
+            # Obtiene los datos del formulario
+            nombre = request.form['nombre']
+            apellido = request.form['apellido']
+            domicilio = request.form['domicilio']
+            telefono = request.form['telefono']
 
-        error = None
-        
-        # Validación de los datos del formulario
-        if not re.match(r'^[a-zA-Z ]+$', nombre):
-            error = 'El nombre solo puede contener letras y espacios.'
-        elif not re.match(r'^[a-zA-Z ]+$', apellido):
-            error = 'El apellido solo puede contener letras y espacios.'
-        elif not re.match(r'^[a-zA-Z0-9 ]+$', domicilio):
-            error = 'El domicilio solo puede contener letras, números y espacios.'
-        elif not re.match(r'^\d{10}$', telefono):
-            error = 'El teléfono debe ser un número de exactamente 10 dígitos.'
-        
-        if error:
-            flash(error)
-            return render_template('add_cliente.html')
+            # Validación de los datos del formulario
+            if not re.match(r'^[a-zA-Z ]+$', nombre):
+                raise ValueError('El nombre solo puede contener letras y espacios.')
+            if not re.match(r'^[a-zA-Z ]+$', apellido):
+                raise ValueError('El apellido solo puede contener letras y espacios.')
+            if not re.match(r'^[a-zA-Z0-9 ]+$', domicilio):
+                raise ValueError('El domicilio solo puede contener letras, números y espacios.')
+            if not re.match(r'^\d{10}$', telefono):
+                raise ValueError('El teléfono debe ser un número de exactamente 10 dígitos.')
 
-        # Si no hay errores, inserta el cliente en la base de datos
-        conexion = obtener_conexion()
-        cursor = conexion.cursor()
-        cursor.execute("""
-            INSERT INTO Cliente (Nombre, Apellido, Domicilio, Telefono)
-            VALUES (%s, %s, %s, %s)
-        """, (nombre, apellido, domicilio, telefono))
-        conexion.commit()
-        cursor.close()
-        conexion.close()
-        flash('Cliente agregado correctamente')
-        return redirect(url_for('clientes.add_cliente'))
+            # Inserta los datos en la base de datos
+            conexion = obtener_conexion()
+            cursor = conexion.cursor()
+            cursor.execute("""
+                INSERT INTO Cliente (Nombre, Apellido, Domicilio, Telefono)
+                VALUES (%s, %s, %s, %s)
+            """, (nombre, apellido, domicilio, telefono))
+            conexion.commit()  # Guarda los cambios en la base de datos
+            cursor.close()
+            conexion.close()
 
-    return render_template('add_cliente.html')
+            message = "Cliente agregado correctamente"
+            form_data = {}  # Limpia los datos del formulario después de una inserción exitosa
+        except mysql.connector.Error as err:
+            error = f"Error en la base de datos: {err.msg}"
+            form_data = request.form
+        except ValueError as ve:
+            error = str(ve)
+            form_data = request.form
+        except Exception as e:
+            error = f"Ocurrió un error: {str(e)}"
+            form_data = request.form
+
+    return render_template('add_cliente.html', message=message, error=error, form_data=form_data)
 
 # Ruta para ver clientes
 @clientes_bp.route('/see_clientes', methods=['GET', 'POST'])

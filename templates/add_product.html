@@ -11,16 +11,16 @@
     <div class="container">
         <h1>Agregar Producto</h1>
         
-        <!-- Mostrar el mensaje de confirmación si existe -->
-        {% if message %}
-            <p style="color: green;">{{ message }}</p>
-        {% endif %}
-
         <!-- Mostrar el mensaje de error si existe -->
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <div class="error">{{ error }}</div>
         {% endif %}
 
+        <!-- Mostrar el mensaje de confirmación si existe -->
+        {% if message %}
+            <div class="success">{{ message }}</div>
+        {% endif %}
+        
         <form action="{{ url_for('add_product') }}" method="post" enctype="multipart/form-data">
             <label for="marca">Seleccione una Marca:</label>
             <select id="marca" name="marca" required>

@@ -23,7 +23,7 @@ conexion = mysql.connector.connect(
 # Registrar Blueprints
 app.register_blueprint(clientes_bp, url_prefix='/clientes')
 app.register_blueprint(abonos_bp)
-app.register_blueprint(ventas_bp)
+app.register_blueprint(ventas_bp, url_prefix='/ventas')
 
 # Función para verificar si el usuario ha iniciado sesión
 def verificar_sesion():

@@ -1,0 +1,24 @@
+<!-- templates/realizar_venta.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Realizar Venta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_see_products.css') }}">
+</head>
+<body>
+    <h1>Realizar Venta</h1>
+    <form method="POST" action="{{ url_for('ventas.realizar_venta', producto_id=producto_id, cliente_id=cliente_id) }}">
+        <p>Producto: {{ producto.marca }} {{ producto.modelo }} ({{ producto.color }})</p>
+        <p>Cliente: {{ cliente.Nombre }} {{ cliente.Apellido }}</p>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" min="1" max="{{ producto.existencias }}" required>
+        <label for="pago">Método de Pago:</label>
+        <select name="pago" id="pago">
+            <option value="Abonos">Abonos</option>
+            <option value="De contado">De contado</option>
+        </select>
+        <button type="submit">Confirmar Venta</button>
+    </form>
+</body>
+</html>

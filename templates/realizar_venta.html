@@ -50,6 +50,7 @@
                 </select>
                 
                 <button type="submit">Confirmar Venta</button>
+                <a href="{{ url_for('ventas.escoger_cliente', producto_id=producto.ProductoID) }}" class="btn-cancel">Cancelar</a>
             </section>
         </form>
     </div>

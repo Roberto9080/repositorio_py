@@ -58,7 +58,7 @@ img {
     width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
     max-width: 350px; /* Tamaño máximo de la imagen */
     height: 100%; /* Mantener la proporción */
-    max-height: 350px;
+    max-height: 400px;
 }
 
 /* Estilo para las etiquetas de los formularios */
@@ -99,6 +99,31 @@ button {
 /* Estilo para el botón al pasar el mouse */
 button:hover {
     background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* Estilo para el botón deshabilitado */
+button:disabled {
+    background-color: #ccc; /* Color de fondo gris para el botón deshabilitado */
+    cursor: not-allowed; /* Cursor no permitido para el botón deshabilitado */
+}
+
+/* Estilo para el botón de cancelar */
+.btn-cancel {
+    display: inline-block; /* Muestra el botón en línea con otros elementos */
+    padding: 10px 20px; /* Espaciado interno */
+    background-color: #6c757d; /* Color de fondo gris */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    text-align: center; /* Centra el texto dentro del botón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Estilo para el botón de cancelar al pasar el mouse */
+.btn-cancel:hover {
+    background-color: #5a6268; /* Cambia el color de fondo al pasar el mouse */
 }
 
 /* Estilo para el botón deshabilitado */

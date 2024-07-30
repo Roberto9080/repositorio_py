@@ -1,0 +1,108 @@
+/* static/styles_realizar_venta.css */
+
+/* Configuración general del cuerpo de la página */
+body {
+    font-family: Arial, sans-serif; /* Fuente general */
+    background-color: #f4f4f4; /* Color de fondo */
+    margin: 0; /* Elimina el margen por defecto */
+    padding: 0; /* Elimina el padding por defecto */
+}
+
+/* Contenedor principal de la página */
+.container {
+    max-width: 700px; /* Ancho máximo del contenedor */
+    margin: 50px auto; /* Centra el contenedor horizontalmente con margen en la parte superior e inferior */
+    padding: 20px; /* Espaciado interno */
+    background-color: #fff; /* Color de fondo blanco */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+/* Estilo para el encabezado principal */
+h1 {
+    color: #333; /* Color del texto */
+    text-align: center; /* Centra el texto */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+/* Estilo para los subtítulos */
+h2 {
+    color: #555; /* Color del texto */
+    margin-bottom: 10px; /* Espacio debajo del subtítulo */
+    border-bottom: 2px solid #007bff; /* Línea decorativa debajo del subtítulo */
+    padding-bottom: 5px; /* Espacio debajo de la línea decorativa */
+}
+
+/* Espaciado entre secciones */
+section {
+    margin-bottom: 20px; /* Espacio debajo de cada sección */
+}
+
+/* Estilo general para los párrafos */
+p {
+    font-size: 16px; /* Tamaño de fuente */
+    line-height: 1.6; /* Altura de línea para mejor legibilidad */
+}
+
+/* Estilo para el texto destacado */
+strong {
+    color: #333; /* Color del texto destacado */
+}
+
+/* Estilo para las imágenes del producto */
+img {
+    
+    border: 1px solid #ddd; /* Borde sutil alrededor de la imagen */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-top: 5px; /* Espacio encima de la imagen */
+    width: 100%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    max-width: 350px; /* Tamaño máximo de la imagen */
+    height: 100%; /* Mantener la proporción */
+    max-height: 350px;
+}
+
+/* Estilo para las etiquetas de los formularios */
+label {
+    display: block; /* Hace que la etiqueta ocupe toda la línea */
+    margin-top: 10px; /* Espacio encima de la etiqueta */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Estilo para los campos de entrada y selecciones */
+input[type="number"],
+select {
+    width: 100%; /* Ancho completo del contenedor */
+    padding: 10px; /* Espaciado interno */
+    margin-top: 5px; /* Espacio encima del campo */
+    margin-bottom: 15px; /* Espacio debajo del campo */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Estilo para el botón de envío */
+button {
+    display: inline-block; /* Muestra el botón en línea con otros elementos */
+    padding: 10px 20px; /* Espaciado interno */
+    background-color: #007bff; /* Color de fondo */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    text-align: center; /* Centra el texto dentro del botón */
+    margin-top: 10px; /* Espacio encima del botón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+/* Estilo para el botón al pasar el mouse */
+button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* Estilo para el botón deshabilitado */
+button:disabled {
+    background-color: #ccc; /* Color de fondo gris para el botón deshabilitado */
+    cursor: not-allowed; /* Cursor no permitido para el botón deshabilitado */
+}

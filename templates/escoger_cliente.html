@@ -13,7 +13,7 @@
 <body>
     <a href="{{ url_for('see_products') }}" class="button back-button">Volver</a>
     <div class="container">
-        <h1>Clientes Registrados</h1>
+        <h1>Seleccionar Cliente Para la Venta</h1>
         <form action="{{ url_for('ventas.escoger_cliente', producto_id=producto_id) }}" method="post" class="search-form">
             <input type="text" name="search" placeholder="Buscar clientes..." value="{{ search_query }}">
             <button type="submit" class="button">Buscar</button>

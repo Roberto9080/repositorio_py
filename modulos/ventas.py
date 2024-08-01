@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 import mysql.connector
 
 ventas_bp = Blueprint('ventas', __name__)
@@ -15,8 +15,6 @@ def obtener_conexion():
 def verificar_sesion():
     if 'username' not in session:
         return redirect(url_for('login'))
-    
-
 
 @ventas_bp.route('/escoger_cliente/<int:producto_id>', methods=['GET', 'POST'])
 def escoger_cliente(producto_id):
@@ -119,14 +117,82 @@ def realizar_venta(producto_id, cliente_id):
         
         # Insertar la venta en la base de datos
         cursor.execute("""
-            INSERT INTO ventas (producto, cliente, cantidad, metodo_pago)
-            VALUES (%s, %s, %s, %s)
-        """, (producto_id, cliente_id, cantidad, pago))
+            INSERT INTO Ventas (ProductoID, ClienteID, Cantidad, MetodoPago, Total, Fecha)
+            VALUES (%s, %s, %s, %s, %s, NOW())
+        """, (producto_id, cliente_id, cantidad, pago, cantidad * producto['precio']))
         conexion.commit()
         
         cursor.close()
         conexion.close()
         
-        return redirect(url_for('productos.see_products'))
+        return redirect(url_for('ventas.see_ventas'))
     
     return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id)
+
+@ventas_bp.route('/see_ventas', methods=['GET', 'POST'])
+def see_ventas():
+    if verificar_sesion():
+        return verificar_sesion()
+
+    search_query = ''
+    filters = {'cliente': '', 'producto': '', 'fecha': '', 'cantidad': '', 'total': ''}
+    order = request.args.get('order', None)
+
+    if request.method == 'POST':
+        search_query = request.form.get('search', '')
+        filters['cliente'] = request.form.get('cliente', '')
+        filters['producto'] = request.form.get('producto', '')
+        filters['cantidad'] = request.form.get('cantidad', '')
+        filters['total'] = request.form.get('total', '')
+        filters['fecha'] = request.form.get('fecha', '')
+
+    query = """
+        SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido, p.marca, p.modelo, v.Fecha
+        FROM Ventas v
+        JOIN Cliente c ON v.ClienteID = c.ClienteID
+        JOIN Productos p ON v.ProductoID = p.ProductoID
+        WHERE 1=1
+    """
+    params = []
+
+    if search_query:
+        query += " AND (c.Nombre LIKE %s OR c.Apellido LIKE %s OR p.marca LIKE %s OR p.modelo LIKE %s)"
+        search_pattern = f"%{search_query}%"
+        params.extend([search_pattern, search_pattern, search_pattern, search_pattern])
+
+    if filters['cliente']:
+        query += " AND (c.Nombre LIKE %s OR c.Apellido LIKE %s)"
+        params.append(f"%{filters['cliente']}%")
+        params.append(f"%{filters['cliente']}%")
+    if filters['producto']:
+        query += " AND (p.marca LIKE %s OR p.modelo LIKE %s)"
+        params.append(f"%{filters['producto']}%")
+        params.append(f"%{filters['producto']}%")
+    if filters['fecha']:
+        query += " AND DATE(v.Fecha) = %s"
+        params.append(filters['fecha'])
+    if filters['cantidad']:
+        query += " AND v.Cantidad = %s"
+        params.append(filters['cantidad'])
+    if filters['total']:
+        query += " AND v.Total = %s"
+        params.append(filters['total'])
+
+    if order:
+        if order == 'fecha_asc':
+            query += " ORDER BY v.Fecha ASC"
+        elif order == 'fecha_desc':
+            query += " ORDER BY v.Fecha DESC"
+        elif order == 'total_asc':
+            query += " ORDER BY v.Total ASC"
+        elif order == 'total_desc':
+            query += " ORDER BY v.Total DESC"
+
+    conexion = obtener_conexion()
+    cursor = conexion.cursor(dictionary=True)
+    cursor.execute(query, params)
+    ventas = cursor.fetchall()
+    cursor.close()
+    conexion.close()
+
+    return render_template('see_ventas.html', ventas=ventas, search_query=search_query, filters=filters)

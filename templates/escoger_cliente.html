@@ -67,7 +67,7 @@
                     <td>{{ cliente.Domicilio }}</td>
                     <td>{{ cliente.Telefono }}</td>
                     <td>
-                        <a href="{{ url_for('ventas.realizar_venta', cliente_id=cliente.ClienteID, producto_id=producto_id) }}" class="button">Realizar Venta</a>
+                        <a href="{{ url_for('realizar_venta', cliente_id=cliente.ClienteID, producto_id=producto_id) }}" class="button">Realizar Venta</a>
                     </td>
                 </tr>
                 {% endfor %}

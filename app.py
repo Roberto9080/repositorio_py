@@ -149,7 +149,7 @@ def see_products():
         'talla': request.args.get('talla', ''),
         'tipo': request.args.get('tipo', '')
     }
-    order_by = request.args.get('order', 'marca_asc')  # Obtener el parámetro de ordenamiento
+    order_by = request.args.get('order', 'marca_asc')
 
     query = "SELECT * FROM Productos WHERE 1=1"
     params = []
@@ -182,7 +182,6 @@ def see_products():
         query += " AND tipo LIKE %s"
         params.append('%' + filters['tipo'] + '%')
 
-    # Añadir ordenamiento
     if order_by == 'precio_asc':
         query += " ORDER BY precio ASC"
     elif order_by == 'precio_desc':
@@ -202,6 +201,7 @@ def see_products():
     cursor.close()
 
     return render_template('see_products.html', productos=productos, search_query=search_query, order_by=order_by, filters=filters)
+
 
 # Ruta para editar un producto, maneja métodos GET y POST
 @app.route('/edit_product/<int:id>', methods=['GET', 'POST'])
@@ -278,6 +278,46 @@ def delete_product(id):
     cursor.close()
 
     return redirect(url_for('see_products'))  # Redirige a ver productos después de eliminar
+
+@app.route('/realizar_venta/<int:producto_id>/<int:cliente_id>', methods=['GET', 'POST'])
+def realizar_venta(producto_id, cliente_id):
+    if verificar_sesion():
+        return verificar_sesion()
+    
+    cursor = conexion.cursor(dictionary=True)
+    
+    try:
+        # Obtener los datos del producto y del cliente
+        cursor.execute("SELECT * FROM Productos WHERE ProductoID = %s", (producto_id,))
+        producto = cursor.fetchone()
+        cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (cliente_id,))
+        cliente = cursor.fetchone()
+
+        if request.method == 'POST':
+            cantidad = int(request.form['cantidad'])
+            pago = request.form['pago']
+
+            # Verificar que la cantidad no exceda las existencias
+            if cantidad > producto['existencias']:
+                error = "La cantidad solicitada excede las existencias disponibles."
+                return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=error)
+
+            # Insertar la venta en la base de datos
+            cursor.execute("""
+                INSERT INTO Ventas (ProductoID, ClienteID, Cantidad, MetodoPago, Total, Fecha)
+                VALUES (%s, %s, %s, %s, %s, NOW())
+            """, (producto_id, cliente_id, cantidad, pago, cantidad * producto['precio']))
+            conexion.commit()
+
+            return redirect(url_for('ventas.see_ventas'))
+    except Exception as e:
+        # Manejar errores
+        return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=str(e))
+    finally:
+        cursor.close()
+
+    return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id)
+
 
 # Inicia la aplicación Flask en modo debug
 if __name__ == '__main__':

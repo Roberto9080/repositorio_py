@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Confirmar Venta</h1>
-        <form method="POST" action="{{ url_for('ventas.realizar_venta', producto_id=producto_id, cliente_id=cliente_id) }}">
+        <form method="POST" action="{{ url_for('realizar_venta', producto_id=producto_id, cliente_id=cliente_id) }}">
             <!-- Información del Producto -->
             <section>
                 <h2>Detalles del Producto</h2>

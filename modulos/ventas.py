@@ -88,46 +88,6 @@ def escoger_cliente(producto_id):
     # Renderizar la plantilla con los clientes y los parámetros de búsqueda y filtro
     return render_template('escoger_cliente.html', clientes=clientes, producto_id=producto_id, search_query=search_query, filters=filters)
 
-@ventas_bp.route('/realizar_venta/<int:producto_id>/<int:cliente_id>', methods=['GET', 'POST'])
-def realizar_venta(producto_id, cliente_id):
-    if verificar_sesion():
-        return verificar_sesion()
-
-    conexion = obtener_conexion()
-    cursor = conexion.cursor(dictionary=True)
-    
-    # Obtener los datos del producto y del cliente
-    cursor.execute("SELECT * FROM Productos WHERE ProductoID = %s", (producto_id,))
-    producto = cursor.fetchone()
-    cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (cliente_id,))
-    cliente = cursor.fetchone()
-
-    if request.method == 'POST':
-        cantidad = int(request.form['cantidad'])
-        pago = request.form['pago']
-        
-        # Verificar que la cantidad no exceda las existencias
-        if cantidad > producto['existencias']:
-            error = "La cantidad solicitada excede las existencias disponibles."
-            return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=error)
-        
-        # Actualizar las existencias del producto
-        nuevas_existencias = producto['existencias'] - cantidad
-        cursor.execute("UPDATE Productos SET existencias = %s WHERE ProductoID = %s", (nuevas_existencias, producto_id))
-        
-        # Insertar la venta en la base de datos
-        cursor.execute("""
-            INSERT INTO Ventas (ProductoID, ClienteID, Cantidad, MetodoPago, Total, Fecha)
-            VALUES (%s, %s, %s, %s, %s, NOW())
-        """, (producto_id, cliente_id, cantidad, pago, cantidad * producto['precio']))
-        conexion.commit()
-        
-        cursor.close()
-        conexion.close()
-        
-        return redirect(url_for('ventas.see_ventas'))
-    
-    return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id)
 
 @ventas_bp.route('/see_ventas', methods=['GET', 'POST'])
 def see_ventas():

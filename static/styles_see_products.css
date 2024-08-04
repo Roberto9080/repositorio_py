@@ -21,6 +21,7 @@ h1 {
     color: #333;
 }
 
+/* Estilos para la tabla de productos */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -47,18 +48,19 @@ tr:nth-child(even) {
 
 /* Ajuste del tamaño de las imágenes */
 img {
-    max-width: 150px; /* Tamaño más grande */
+    max-width: 150px; /* Tamaño máximo de la imagen */
     height: auto; /* Mantener la proporción */
     border-radius: 4px;
 }
 
 /* Asegurar que el contenedor permita que la imagen crezca */
 td img {
-    width: 75%; /* Ajusta el ancho de la imagen al 100% del contenedor */
+    width: 75%; /* Ajusta el ancho de la imagen al 75% del contenedor */
     max-width: 150px; /* Tamaño máximo de la imagen */
     height: auto; /* Mantener la proporción */
 }
 
+/* Estilos para los botones */
 .button {
     display: inline-block;
     padding: 10px 20px;
@@ -78,9 +80,8 @@ td img {
 
 .back-button {
     position: absolute; /* Posiciona el botón de manera absoluta */
-    top: 40px; /* Alinea el botón a 10px del borde superior */
-    left: 10px; /* Alinea el botón a 10px del borde izquierdo */
-    margin-left: 170px; 
+    top: 20px; /* Alinea el botón a 20px del borde superior */
+    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
 }
 
 /* Estilos para la barra de búsqueda */
@@ -105,7 +106,7 @@ td img {
 
 /* Añadir margen entre los botones de búsqueda y filtros adicionales */
 .search-form .button + .button {
-    margin-left: 20px; /* Añadir un margen de 10px entre los botones */
+    margin-left: 20px; /* Añadir un margen de 20px entre los botones */
 }
 
 /* Estilos para el menú desplegable */
@@ -118,19 +119,23 @@ td img {
     background-color: #f8f9fa;
     border: none;
     cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
-    min-width: 120px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
+    border-radius: 4px;
+    padding: 10px 0;
 }
 
 .dropdown-content a, .dropdown-content form {
-    color: black;
+    color: #333;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -158,14 +163,15 @@ td img {
 #order-options {
     display: none; /* Oculta las opciones por defecto */
     position: absolute;
-    top: 60px; /* Ajusta según la posición del botón */
-    right: 10px; /* Ajusta según la posición deseada */
+    top: 70px; /* Ajusta según la posición del botón */
+    right: 20px; /* Ajusta según la posición deseada */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1;
     padding: 10px;
+    min-width: 180px; /* Ancho mínimo para las opciones de ordenamiento */
 }
 
 #order-options a {
@@ -190,4 +196,43 @@ td img {
 /* Estilos adicionales para mejorar la visibilidad */
 #order-options {
     margin-top: 10px; /* Añadir espacio entre el botón y el menú */
+}
+
+/* Mensajes de éxito y error */
+.error, .success {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    color: #721c24;
 }

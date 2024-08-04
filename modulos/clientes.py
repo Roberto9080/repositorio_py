@@ -190,13 +190,27 @@ def edit_cliente(id):
 def delete_cliente(id):
     if verificar_sesion():
         return verificar_sesion()
-    
+
     conexion = obtener_conexion()
     cursor = conexion.cursor()
-    cursor.execute("DELETE FROM Cliente WHERE ClienteID = %s", (id,))
-    conexion.commit()
-    cursor.close()
-    conexion.close()
-    
-    flash('Cliente eliminado correctamente')
-    return redirect(url_for('clientes.see_clientes'))
+
+    try:
+        # Verificar si hay ventas asociadas al cliente
+        cursor.execute("SELECT COUNT(*) FROM Ventas WHERE ClienteID = %s", (id,))
+        ventas_count = cursor.fetchone()[0]
+
+        if ventas_count > 0:
+            flash("No se puede eliminar el cliente porque tiene ventas asociadas.", "error")
+            return redirect(url_for('clientes.see_clientes'))  # Redirige a ver productos con mensaje de error
+
+        # Eliminar el cliente si no hay ventas asociadas
+        cursor.execute("DELETE FROM Cliente WHERE ClienteID = %s", (id,))
+        conexion.commit()  # Guarda los cambios en la base de datos
+
+        flash("Cliente eliminado correctamente.", "success")
+        return redirect(url_for('clientes.see_clientes'))  # Redirige a ver clientes con mensaje de éxito
+    except Exception as e:
+        flash(f"Error al eliminar el cliente: {str(e)}", "error")
+        return redirect(url_for('clientes.see_clientes'))  # Redirige a ver clientes con mensaje de error
+    finally:
+        cursor.close()

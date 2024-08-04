@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import mysql.connector
 import re
 
@@ -266,18 +266,35 @@ def edit_product(id):
 
     return render_template('edit_product.html', producto=producto, message=message, error=error)
 
-# Ruta para eliminar un producto
+
 @app.route('/delete_product/<int:id>', methods=['POST'])
 def delete_product(id):
     if verificar_sesion():
         return verificar_sesion()
 
     cursor = conexion.cursor()
-    cursor.execute("DELETE FROM Productos WHERE ProductoID = %s", (id,))
-    conexion.commit()  # Guarda los cambios en la base de datos
-    cursor.close()
 
-    return redirect(url_for('see_products'))  # Redirige a ver productos después de eliminar
+    try:
+        # Verificar si hay ventas asociadas al producto
+        cursor.execute("SELECT COUNT(*) FROM Ventas WHERE ProductoID = %s", (id,))
+        ventas_count = cursor.fetchone()[0]
+
+        if ventas_count > 0:
+            flash("No se puede eliminar el producto porque tiene ventas asociadas.", "error")
+            return redirect(url_for('see_products'))  # Redirige a ver productos con mensaje de error
+
+        # Eliminar el producto si no hay ventas asociadas
+        cursor.execute("DELETE FROM Productos WHERE ProductoID = %s", (id,))
+        conexion.commit()  # Guarda los cambios en la base de datos
+
+        flash("Producto eliminado correctamente.", "success")
+        return redirect(url_for('see_products'))  # Redirige a ver productos con mensaje de éxito
+    except Exception as e:
+        flash(f"Error al eliminar el producto: {str(e)}", "error")
+        return redirect(url_for('see_products'))  # Redirige a ver productos con mensaje de error
+    finally:
+        cursor.close()
+
 
 @app.route('/realizar_venta/<int:producto_id>/<int:cliente_id>', methods=['GET', 'POST'])
 def realizar_venta(producto_id, cliente_id):

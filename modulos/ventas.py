@@ -107,7 +107,8 @@ def see_ventas():
         filters['fecha'] = request.form.get('fecha', '')
 
     query = """
-        SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido, p.marca, p.modelo, v.Fecha
+        SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido,
+               p.marca, p.modelo, p.color, p.talla, p.imagen_nombre, v.Fecha, p.tipo, p.precio
         FROM Ventas v
         JOIN Cliente c ON v.ClienteID = c.ClienteID
         JOIN Productos p ON v.ProductoID = p.ProductoID

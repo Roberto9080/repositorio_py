@@ -7,13 +7,14 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px; /* Aumentar el ancho máximo del contenedor */
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     position: relative;
+    overflow-x: auto; /* Permitir desplazamiento horizontal si es necesario */
 }
 
 h1 {
@@ -45,17 +46,54 @@ tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* Estilos específicos para la columna de fecha */
-table th:nth-child(3), table td:nth-child(3) {
-    width: 200px; /* Ajusta el ancho según sea necesario */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+/* Ajustar el ancho de columnas específicas */
+table th:nth-child(1), table td:nth-child(1) {
+    width: 150px; /* Ancho para Cliente */
 }
 
-/* Estilos para las imágenes (si es necesario) */
+table th:nth-child(2), table td:nth-child(2) {
+    width: 200px; /* Ancho para Producto */
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 100px; /* Ancho para Color */
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    width: 100px; /* Ancho para Talla */
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    width: 100px; /* Ancho para Precio */
+}
+
+table th:nth-child(6), table td:nth-child(6) {
+    width: 100px; /* Ancho para Tipo */
+}
+
+table th:nth-child(7), table td:nth-child(7) {
+    width: 60px; /* Ancho para Cantidad */
+}
+
+table th:nth-child(8), table td:nth-child(8) {
+    width: 120px; /* Ancho para Precio Total */
+}
+
+table th:nth-child(9), table td:nth-child(9) {
+    width: 150px; /* Ancho para Forma de Pago */
+}
+
+table th:nth-child(10), table td:nth-child(10) {
+    width: 150px; /* Ancho para Fecha */
+}
+
+table th:nth-child(11), table td:nth-child(11) {
+    width: 200px; /* Ancho para Imagen */
+}
+
+/* Estilos para las imágenes */
 img {
-    max-width: 150px; /* Tamaño más grande */
+    max-width: 150px; /* Ajusta el tamaño de las imágenes */
     height: auto; /* Mantener la proporción */
     border-radius: 4px;
 }
@@ -80,7 +118,7 @@ img {
 
 .back-button {
     position: absolute; /* Posiciona el botón de manera absoluta */
-    top: 40px; /* Alinea el botón a 40px del borde superior */
-    left: 10px; /* Alinea el botón a 10px del borde izquierdo */
-    margin-left: 170px; 
+    top: 20px; /* Alinea el botón a 20px del borde superior */
+    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
+    z-index: 10; /* Asegura que el botón esté por encima del contenedor */
 }

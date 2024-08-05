@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ver Ventas</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_see_products.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_see_ventas.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -16,10 +16,15 @@
                 <tr>
                     <th>Cliente</th>
                     <th>Producto</th>
+                    <th>Color</th>
+                    <th>Talla</th>
+                    <th>Precio</th>
+                    <th>Tipo</th>
                     <th>Cantidad</th>
                     <th>Precio Total</th>
                     <th>Forma de Pago</th>
                     <th>Fecha</th>
+                    <th>Imagen</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,10 +32,15 @@
                 <tr>
                     <td>{{ venta.cliente_nombre }} {{ venta.cliente_apellido }}</td>
                     <td>{{ venta.marca }} {{ venta.modelo }}</td>
+                    <td>{{ venta.color }}</td>
+                    <td>{{ venta.talla }}</td>
+                    <td>{{ venta.precio}}</td>
+                    <td>{{ venta.tipo}}</td>
                     <td>{{ venta.Cantidad }}</td>
                     <td>{{ venta.Total }}</td>
                     <td>{{ venta.MetodoPago }}</td>
                     <td>{{ venta.Fecha }}</td>
+                    <td><img src="{{ url_for('static', filename='images/' + venta.imagen_nombre) }}"></td>
                 </tr>
                 {% endfor %}
             </tbody>

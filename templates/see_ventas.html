@@ -47,15 +47,27 @@
                         <option value="Piso" {% if filters['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
                     </select>
                 </div>
+                <div>
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" name="fecha" value="{{ filters['fecha'] }}">
+                </div>
+                <div>
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" id="cantidad" name="cantidad" value="{{ filters['cantidad'] }}">
+                </div>
+                <div>
+                    <label for="total">Total:</label>
+                    <input type="number" id="total" name="total" value="{{ filters['total'] }}">
+                </div>
                 <button type="submit" class="button">Aplicar Filtros</button>
             </form>
         </div>
         
         <div id="order-options" style="display:none;">
-            <a href="{{ url_for('ventas.see_ventas', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='precio_asc') }}" class="button">Precio más bajo <i class="fas fa-arrow-down"></i></a>
-            <a href="{{ url_for('ventas.see_ventas', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='precio_desc') }}" class="button">Precio más alto <i class="fas fa-arrow-up"></i></a>
-            <a href="{{ url_for('ventas.see_ventas', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='fecha_asc') }}" class="button">Fecha más antigua <i class="fas fa-arrow-down"></i></a>
-            <a href="{{ url_for('ventas.see_ventas', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], order='fecha_desc') }}" class="button">Fecha más reciente <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('ventas.see_ventas', order='precio_asc', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], fecha=filters['fecha'], cantidad=filters['cantidad'], total=filters['total']) }}" class="button">Precio más bajo <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('ventas.see_ventas', order='precio_desc', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], fecha=filters['fecha'], cantidad=filters['cantidad'], total=filters['total']) }}" class="button">Precio más alto <i class="fas fa-arrow-up"></i></a>
+            <a href="{{ url_for('ventas.see_ventas', order='fecha_asc', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], fecha=filters['fecha'], cantidad=filters['cantidad'], total=filters['total']) }}" class="button">Fecha más antigua <i class="fas fa-arrow-down"></i></a>
+            <a href="{{ url_for('ventas.see_ventas', order='fecha_desc', search_query=search_query, cliente=filters['cliente'], producto=filters['producto'], color=filters['color'], talla=filters['talla'], tipo=filters['tipo'], fecha=filters['fecha'], cantidad=filters['cantidad'], total=filters['total']) }}" class="button">Fecha más reciente <i class="fas fa-arrow-up"></i></a>
         </div>
 
         <!-- Tabla de ventas -->
@@ -88,7 +100,7 @@
                     <td>{{ venta.Total }}</td>
                     <td>{{ venta.MetodoPago }}</td>
                     <td>{{ venta.Fecha }}</td>
-                    <td><img src="{{ url_for('static', filename='images/' ~ venta.imagen_nombre) }}"></td>
+                    <td><img src="{{ url_for('static', filename='images/' ~ venta.imagen_nombre) }}" alt="Imagen del producto"></td>
                 </tr>
                 {% endfor %}
             </tbody>

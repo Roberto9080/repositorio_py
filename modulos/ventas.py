@@ -93,29 +93,18 @@ def see_ventas():
     if verificar_sesion():
         return verificar_sesion()
 
-    search_query = ''
+    search_query = request.args.get('search_query', '')
     filters = {
-        'cliente': '',
-        'producto': '',
-        'color': '',
-        'talla': '',
-        'tipo': '',
-        'fecha': '',
-        'cantidad': '',
-        'total': ''
+        'cliente': request.args.get('cliente', ''),
+        'producto': request.args.get('producto', ''),
+        'color': request.args.get('color', ''),
+        'talla': request.args.get('talla', ''),
+        'tipo': request.args.get('tipo', ''),
+        'fecha': request.args.get('fecha', ''),
+        'cantidad': request.args.get('cantidad', ''),
+        'total': request.args.get('total', '')
     }
-    order = request.args.get('order', None)
-
-    if request.method == 'POST':
-        search_query = request.form.get('search', '')
-        filters['cliente'] = request.form.get('cliente', '')
-        filters['producto'] = request.form.get('producto', '')
-        filters['color'] = request.form.get('color', '')
-        filters['talla'] = request.form.get('talla', '')
-        filters['tipo'] = request.form.get('tipo', '')
-        filters['fecha'] = request.form.get('fecha', '')
-        filters['cantidad'] = request.form.get('cantidad', '')
-        filters['total'] = request.form.get('total', '')
+    order_by = request.args.get('order', 'fecha_asc')
 
     query = """
         SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido,
@@ -127,20 +116,30 @@ def see_ventas():
     """
     params = []
 
+    if request.method == 'POST':
+        search_query = request.form.get('search', '').strip()
+        filters['cliente'] = request.form.get('cliente', '').strip()
+        filters['producto'] = request.form.get('producto', '').strip()
+        filters['color'] = request.form.get('color', '').strip()
+        filters['talla'] = request.form.get('talla', '').strip()
+        filters['tipo'] = request.form.get('tipo', '').strip()
+        filters['fecha'] = request.form.get('fecha', '').strip()
+        filters['cantidad'] = request.form.get('cantidad', '').strip()
+        filters['total'] = request.form.get('total', '').strip()
+
     if search_query:
         query += " AND (c.Nombre LIKE %s OR c.Apellido LIKE %s OR p.marca LIKE %s OR p.modelo LIKE %s)"
-        search_pattern = f"%{search_query}%"
-        params.extend([search_pattern, search_pattern, search_pattern, search_pattern])
-
+        params.extend(['%' + search_query + '%'] * 4)
+    
     if filters['cliente']:
         query += " AND (c.Nombre LIKE %s OR c.Apellido LIKE %s)"
-        params.extend([f"%{filters['cliente']}%", f"%{filters['cliente']}%"])
+        params.extend(['%' + filters['cliente'] + '%', '%' + filters['cliente'] + '%'])
     if filters['producto']:
         query += " AND (p.marca LIKE %s OR p.modelo LIKE %s)"
-        params.extend([f"%{filters['producto']}%", f"%{filters['producto']}%"])
+        params.extend(['%' + filters['producto'] + '%', '%' + filters['producto'] + '%'])
     if filters['color']:
         query += " AND p.color LIKE %s"
-        params.append(f"%{filters['color']}%")
+        params.append('%' + filters['color'] + '%')
     if filters['talla']:
         query += " AND p.talla = %s"
         params.append(filters['talla'])
@@ -157,21 +156,20 @@ def see_ventas():
         query += " AND v.Total = %s"
         params.append(filters['total'])
 
-    if order:
-        if order == 'precio_asc':
-            query += " ORDER BY p.precio ASC"
-        elif order == 'precio_desc':
-            query += " ORDER BY p.precio DESC"
-        elif order == 'fecha_asc':
-            query += " ORDER BY v.Fecha ASC"
-        elif order == 'fecha_desc':
-            query += " ORDER BY v.Fecha DESC"
+    if order_by == 'precio_asc':
+        query += " ORDER BY p.precio ASC"
+    elif order_by == 'precio_desc':
+        query += " ORDER BY p.precio DESC"
+    elif order_by == 'fecha_asc':
+        query += " ORDER BY v.Fecha ASC"
+    elif order_by == 'fecha_desc':
+        query += " ORDER BY v.Fecha DESC"
 
     conexion = obtener_conexion()
     cursor = conexion.cursor(dictionary=True)
-    cursor.execute(query, params)
+    cursor.execute(query, tuple(params))
     ventas = cursor.fetchall()
     cursor.close()
     conexion.close()
 
-    return render_template('see_ventas.html', ventas=ventas, search_query=search_query, filters=filters)
+    return render_template('see_ventas.html', ventas=ventas, search_query=search_query, order_by=order_by, filters=filters)

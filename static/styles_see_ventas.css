@@ -22,6 +22,143 @@ h1 {
     color: #333;
 }
 
+/* Estilos para el botón de volver */
+.back-button {
+    position: absolute; /* Posiciona el botón de manera absoluta */
+    top: 20px; /* Alinea el botón a 20px del borde superior */
+    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    display: inline-block;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.back-button:focus {
+    outline: none;
+}
+
+/* Estilos para el formulario de búsqueda y filtros */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Espacio entre los elementos */
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 200px; /* Ajusta el ancho según sea necesario */
+}
+
+.search-form .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.search-form .button:hover {
+    background-color: #0056b3;
+}
+
+.search-form .button:focus {
+    outline: none;
+}
+
+/* Estilos para los filtros adicionales */
+#additionalFilters {
+    margin-top: 20px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.filter-form div {
+    margin: 10px;
+}
+
+.filter-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filter-form input, .filter-form select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filter-form .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.filter-form .button:hover {
+    background-color: #0056b3;
+}
+
+.filter-form .button:focus {
+    outline: none;
+}
+
+/* Estilos para las opciones de ordenamiento */
+#order-options {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+#order-options .button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#order-options .button:hover {
+    background-color: #0056b3;
+}
+
+#order-options .button:focus {
+    outline: none;
+}
+
+/* Estilos para la tabla */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -96,29 +233,4 @@ img {
     max-width: 150px; /* Ajusta el tamaño de las imágenes */
     height: auto; /* Mantener la proporción */
     border-radius: 4px;
-}
-
-/* Botones de estilo */
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.button:hover {
-    background-color: #0056b3;
-}
-
-.back-button {
-    position: absolute; /* Posiciona el botón de manera absoluta */
-    top: 20px; /* Alinea el botón a 20px del borde superior */
-    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
-    z-index: 10; /* Asegura que el botón esté por encima del contenedor */
 }

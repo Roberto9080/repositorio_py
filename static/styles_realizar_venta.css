@@ -51,7 +51,6 @@ strong {
 
 /* Estilo para las imágenes del producto */
 img {
-    
     border: 1px solid #ddd; /* Borde sutil alrededor de la imagen */
     border-radius: 4px; /* Bordes redondeados */
     margin-top: 5px; /* Espacio encima de la imagen */
@@ -130,4 +129,57 @@ button:disabled {
 button:disabled {
     background-color: #ccc; /* Color de fondo gris para el botón deshabilitado */
     cursor: not-allowed; /* Cursor no permitido para el botón deshabilitado */
+}
+
+/* Estilo para el mensaje de confirmación */
+.confirm-message {
+    display: none; /* Oculta el mensaje por defecto */
+    position: fixed; /* Posición fija */
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta la posición para centrar completamente */
+    background-color: #fff; /* Color de fondo blanco */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    text-align: center; /* Centra el texto */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+}
+
+.confirm-message p {
+    font-size: 18px; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    margin-bottom: 20px; /* Espaciado debajo del párrafo */
+}
+
+.btn-confirm, .btn-cancel {
+    display: inline-block; /* Muestra el botón en línea */
+    padding: 10px 20px; /* Espaciado interno */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de fuente */
+    text-align: center; /* Centra el texto dentro del botón */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+    margin: 5px; /* Espaciado entre botones */
+}
+
+.btn-confirm {
+    background-color: #28a745; /* Color de fondo verde */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+}
+
+.btn-confirm:hover {
+    background-color: #218838; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.btn-cancel {
+    background-color: #6c757d; /* Color de fondo gris */
+    color: white; /* Color del texto */
+    text-decoration: none; /* Elimina el subrayado */
+    border: none; /* Sin borde */
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268; /* Cambia el color de fondo al pasar el mouse */
 }

@@ -88,23 +88,34 @@ def escoger_cliente(producto_id):
     # Renderizar la plantilla con los clientes y los parámetros de búsqueda y filtro
     return render_template('escoger_cliente.html', clientes=clientes, producto_id=producto_id, search_query=search_query, filters=filters)
 
-
 @ventas_bp.route('/see_ventas', methods=['GET', 'POST'])
 def see_ventas():
     if verificar_sesion():
         return verificar_sesion()
 
     search_query = ''
-    filters = {'cliente': '', 'producto': '', 'fecha': '', 'cantidad': '', 'total': ''}
+    filters = {
+        'cliente': '',
+        'producto': '',
+        'color': '',
+        'talla': '',
+        'tipo': '',
+        'fecha': '',
+        'cantidad': '',
+        'total': ''
+    }
     order = request.args.get('order', None)
 
     if request.method == 'POST':
         search_query = request.form.get('search', '')
         filters['cliente'] = request.form.get('cliente', '')
         filters['producto'] = request.form.get('producto', '')
+        filters['color'] = request.form.get('color', '')
+        filters['talla'] = request.form.get('talla', '')
+        filters['tipo'] = request.form.get('tipo', '')
+        filters['fecha'] = request.form.get('fecha', '')
         filters['cantidad'] = request.form.get('cantidad', '')
         filters['total'] = request.form.get('total', '')
-        filters['fecha'] = request.form.get('fecha', '')
 
     query = """
         SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido,
@@ -123,12 +134,19 @@ def see_ventas():
 
     if filters['cliente']:
         query += " AND (c.Nombre LIKE %s OR c.Apellido LIKE %s)"
-        params.append(f"%{filters['cliente']}%")
-        params.append(f"%{filters['cliente']}%")
+        params.extend([f"%{filters['cliente']}%", f"%{filters['cliente']}%"])
     if filters['producto']:
         query += " AND (p.marca LIKE %s OR p.modelo LIKE %s)"
-        params.append(f"%{filters['producto']}%")
-        params.append(f"%{filters['producto']}%")
+        params.extend([f"%{filters['producto']}%", f"%{filters['producto']}%"])
+    if filters['color']:
+        query += " AND p.color LIKE %s"
+        params.append(f"%{filters['color']}%")
+    if filters['talla']:
+        query += " AND p.talla = %s"
+        params.append(filters['talla'])
+    if filters['tipo']:
+        query += " AND p.tipo = %s"
+        params.append(filters['tipo'])
     if filters['fecha']:
         query += " AND DATE(v.Fecha) = %s"
         params.append(filters['fecha'])
@@ -140,14 +158,14 @@ def see_ventas():
         params.append(filters['total'])
 
     if order:
-        if order == 'fecha_asc':
+        if order == 'precio_asc':
+            query += " ORDER BY p.precio ASC"
+        elif order == 'precio_desc':
+            query += " ORDER BY p.precio DESC"
+        elif order == 'fecha_asc':
             query += " ORDER BY v.Fecha ASC"
         elif order == 'fecha_desc':
             query += " ORDER BY v.Fecha DESC"
-        elif order == 'total_asc':
-            query += " ORDER BY v.Total ASC"
-        elif order == 'total_desc':
-            query += " ORDER BY v.Total DESC"
 
     conexion = obtener_conexion()
     cursor = conexion.cursor(dictionary=True)

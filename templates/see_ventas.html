@@ -14,6 +14,15 @@
     <a href="{{ url_for('dashboard') }}" class="button back-button">Volver</a>
     <div class="container">
         <h1>Ventas Realizadas</h1>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+          {% if messages %}
+          <div class="flash-messages">
+              {% for category, message in messages %}
+                  <div class="flash {{ category }}">{{ message }}</div>
+              {% endfor %}
+          </div>
+          {% endif %}
+        {% endwith %}
         <!-- Formulario de búsqueda y filtros -->
         <form action="{{ url_for('ventas.see_ventas') }}" method="post" class="search-form">
             <input type="text" name="search" placeholder="Buscar ventas..." value="{{ search_query }}">
@@ -85,6 +94,7 @@
                     <th>Forma de Pago</th>
                     <th>Fecha</th>
                     <th>Imagen</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -101,6 +111,16 @@
                     <td>{{ venta.MetodoPago }}</td>
                     <td>{{ venta.Fecha }}</td>
                     <td><img src="{{ url_for('static', filename='images/' ~ venta.imagen_nombre) }}" alt="Imagen del producto"></td>
+                    <td>
+                        <div class="dropdown">
+                          <button class="dropbtn" onclick="toggleMenu('menu-{{ venta.VentaID }}')"><i class="fas fa-ellipsis-v"></i></button>
+                          <div id="menu-{{ venta.VentaID }}" class="dropdown-content">
+                              <form action="{{ url_for('ventas.delete_venta', venta_id=venta.VentaID) }}" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar esta venta?');">
+                                <button type="submit" class="delete-button">Eliminar</button>
+                            </form>
+                         </div>
+                       </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

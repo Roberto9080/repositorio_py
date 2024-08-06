@@ -107,7 +107,7 @@ def see_ventas():
     order_by = request.args.get('order', 'fecha_asc')
 
     query = """
-        SELECT v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido,
+        SELECT v.VentaID, v.ClienteID, v.ProductoID, v.Cantidad, v.MetodoPago, v.Total, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido,
                p.marca, p.modelo, p.color, p.talla, p.imagen_nombre, v.Fecha, p.tipo, p.precio
         FROM Ventas v
         JOIN Cliente c ON v.ClienteID = c.ClienteID
@@ -173,3 +173,24 @@ def see_ventas():
     conexion.close()
 
     return render_template('see_ventas.html', ventas=ventas, search_query=search_query, order_by=order_by, filters=filters)
+
+
+@ventas_bp.route('/delete_venta/<int:venta_id>', methods=['POST'])
+def delete_venta(venta_id):
+    if verificar_sesion():
+        return verificar_sesion()
+
+    conexion = obtener_conexion()
+    cursor = conexion.cursor()
+
+    try:
+        cursor.execute("DELETE FROM Ventas WHERE VentaID = %s", (venta_id,))
+        conexion.commit()
+        flash('Venta eliminada correctamente.', 'success')
+    except Exception as e:
+        flash(f'Error al eliminar la venta: {e}', 'error')
+    finally:
+        cursor.close()
+        conexion.close()
+
+    return redirect(url_for('ventas.see_ventas'))

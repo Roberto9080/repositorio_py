@@ -163,21 +163,21 @@ td img {
 #order-options {
     display: none; /* Oculta las opciones por defecto */
     position: absolute;
-    top: 70px; /* Ajusta según la posición del botón */
-    right: 20px; /* Ajusta según la posición deseada */
+    top: -3%; /* Alinea el menú justo debajo del botón */
+    left: 70%; /* Alinea el menú a la derecha del botón */
+    transform: translateX(150px); /* Ajusta la separación del botón */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    padding: 10px;
-    min-width: 180px; /* Ancho mínimo para las opciones de ordenamiento */
+    z-index: 9999;
+    padding: 5px; /* Reduce el padding del menú */
+    min-width: 120px; /* Reduce el ancho mínimo del menú */
 }
 
 #order-options a {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
+    display: block;
+    padding: 8px 12px; /* Ajusta el padding de los enlaces */
     color: #333;
     text-decoration: none;
     border-radius: 4px;
@@ -235,4 +235,25 @@ td img {
 .flash.error {
     background-color: #f8d7da;
     color: #721c24;
+}
+/* Estilos para el contenedor de la tabla */
+.table-container {
+    max-height: 550px; /* Ajusta la altura según tus necesidades */
+    overflow-y: auto; /* Permite el desplazamiento vertical */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Estilos para la tabla fija en el contenedor */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0; /* Elimina el margen superior e inferior */
+}
+
+.table-container thead th {
+    position: sticky; /* Fija los encabezados en la parte superior */
+    top: 0;
+    background-color: #f2f2f2; /* El mismo color que el fondo de los encabezados */
+    z-index: 1; /* Asegura que los encabezados se superpongan sobre las filas */
 }

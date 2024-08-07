@@ -304,7 +304,7 @@ img {
 
 /* Estilos para el contenedor de la tabla */
 .table-container {
-    max-height: 500px; /* Ajusta la altura según tus necesidades */
+    max-height: 550px; /* Ajusta la altura según tus necesidades */
     overflow-y: auto; /* Permite el desplazamiento vertical */
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -324,3 +324,41 @@ img {
     z-index: 1; /* Asegura que los encabezados se superpongan sobre las filas */
 }
 
+/* Estilos para las opciones de ordenamiento */
+#order-options {
+    display: none; /* Oculta las opciones por defecto */
+    position: absolute;
+    top: 4%; /* Alinea el menú justo debajo del botón */
+    left: 70%; /* Alinea el menú a la derecha del botón */
+    transform: translateX(30px); /* Ajusta la separación del botón */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    padding: 5px; /* Reduce el padding del menú */
+    min-width: 120px; /* Reduce el ancho mínimo del menú */
+}
+
+#order-options a {
+    display: block;
+    padding: 8px 12px; /* Ajusta el padding de los enlaces */
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#order-options a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+#order-options .fa-arrow-up, #order-options .fa-arrow-down {
+    margin-left: 8px;
+}
+
+/* Estilos adicionales para mejorar la visibilidad */
+#order-options {
+    margin-top: 10px; /* Añadir espacio entre el botón y el menú */
+}

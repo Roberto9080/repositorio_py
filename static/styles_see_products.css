@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -129,9 +129,12 @@ td img {
     background-color: #fff;
     min-width: 160px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    z-index: 9999; /* Asegúrate de que el z-index sea alto para sobreponerse a otros elementos */
     border-radius: 4px;
     padding: 10px 0;
+    /* Ajusta la posición del menú desplegable según sea necesario */
+    top: 100%; /* Coloca el menú justo debajo del botón */
+    left: -130px; /* Alinea el menú con el borde izquierdo del contenedor */
 }
 
 .dropdown-content a, .dropdown-content form {
@@ -239,7 +242,9 @@ td img {
 /* Estilos para el contenedor de la tabla */
 .table-container {
     max-height: 550px; /* Ajusta la altura según tus necesidades */
+    max-width: 100%;
     overflow-y: auto; /* Permite el desplazamiento vertical */
+    overflow-x: hidden;
     border: 1px solid #ddd;
     border-radius: 4px;
 }

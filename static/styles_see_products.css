@@ -262,3 +262,16 @@ td img {
     background-color: #f2f2f2; /* El mismo color que el fondo de los encabezados */
     z-index: 1; /* Asegura que los encabezados se superpongan sobre las filas */
 }
+
+/* Agrega estos estilos al final del archivo */
+.results-message {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333; /* Color del texto */
+    margin: 20px 0; /* Espacio arriba y abajo del mensaje */
+    padding: 10px;
+    border: 1px solid #ddd; /* Borde alrededor del mensaje */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo del mensaje */
+    text-align: center; /* Centrar el texto */
+}

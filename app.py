@@ -200,7 +200,11 @@ def see_products():
     productos = cursor.fetchall()
     cursor.close()
 
-    return render_template('see_products.html', productos=productos, search_query=search_query, order_by=order_by, filters=filters)
+    # Contar el número de productos encontrados
+    productos_count = len(productos)
+
+    return render_template('see_products.html', productos=productos, search_query=search_query, order_by=order_by, filters=filters, productos_count=productos_count)
+
 
 
 # Ruta para editar un producto, maneja métodos GET y POST

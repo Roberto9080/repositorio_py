@@ -14,6 +14,9 @@
     <a href="{{ url_for('dashboard') }}" class="button back-button">Volver</a>
     <div class="container">
         <h1>Productos Disponibles</h1>
+        <!-- Mensaje de número de resultados encontrados -->
+        <p class="results-message">{{ productos_count }} resultado{% if productos_count != 1 %}s{% endif %} encontrado{% if productos_count != 1 %}s{% endif %}</p>
+
         {% with messages = get_flashed_messages(with_categories=True) %}
           {% if messages %}
             <div class="flash-messages">

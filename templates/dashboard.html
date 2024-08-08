@@ -18,9 +18,9 @@
                 </a>
             </div>
             <div class="grid-item">
-                <a href="#abonos">
-                    <h3>Abonos</h3>
-                    <p>Gestión de abonos</p>
+                <a href="{{ url_for('add_product') }}">
+                    <h3>Producto</h3>
+                    <p>Agregar Producto</p>
                 </a>
             </div>
             <div class="grid-item">
@@ -30,7 +30,7 @@
                 </a>
             </div>
             <div class="grid-item">
-                <a href="{{ url_for('add_product') }}">
+                <a href="{{ url_for('see_products') }}">
                     <h3>Inventario</h3>
                     <p>Gestión de inventario</p>
                 </a>

@@ -194,3 +194,16 @@ th {
     background-color: #f8d7da;
     color: #721c24;
 }
+
+/* Agrega estos estilos al final del archivo */
+.results-message {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333; /* Color del texto */
+    margin: 20px 0; /* Espacio arriba y abajo del mensaje */
+    padding: 10px;
+    border: 1px solid #ddd; /* Borde alrededor del mensaje */
+    border-radius: 5px; /* Bordes redondeados */
+    background-color: #f9f9f9; /* Fondo del mensaje */
+    text-align: center; /* Centrar el texto */
+}

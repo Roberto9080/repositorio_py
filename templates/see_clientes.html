@@ -14,6 +14,9 @@
     <a href="{{ url_for('clientes.add_cliente') }}" class="button back-button">Volver</a>
     <div class="container">
         <h1>Clientes Registrados</h1>
+        <!-- Mensaje de número de resultados encontrados -->
+        <p class="results-message">{{ clientes_count }} resultado{% if clientes_count != 1 %}s{% endif %} encontrado{% if clientes_count != 1 %}s{% endif %}</p>
+
         {% with messages = get_flashed_messages(with_categories=True) %}
           {% if messages %}
             <div class="flash-messages">

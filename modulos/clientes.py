@@ -129,9 +129,10 @@ def see_clientes():
     cursor.execute(query, params)
     clientes = cursor.fetchall()
     cursor.close()
+    clientes_count = len(clientes)
     conexion.close()
 
-    return render_template('see_clientes.html', clientes=clientes, search_query=search_query, filters=filters)
+    return render_template('see_clientes.html', clientes=clientes, search_query=search_query, filters=filters, clientes_count = clientes_count)
 
 # Ruta para editar un cliente
 @clientes_bp.route('/edit_cliente/<int:id>', methods=['GET', 'POST'])

@@ -170,9 +170,10 @@ def see_ventas():
     cursor.execute(query, tuple(params))
     ventas = cursor.fetchall()
     cursor.close()
+    ventas_count = len(ventas)
     conexion.close()
 
-    return render_template('see_ventas.html', ventas=ventas, search_query=search_query, order_by=order_by, filters=filters)
+    return render_template('see_ventas.html', ventas=ventas, search_query=search_query, order_by=order_by, filters=filters, ventas_count=ventas_count)
 
 
 @ventas_bp.route('/delete_venta/<int:venta_id>', methods=['POST'])

@@ -60,7 +60,8 @@
                 </div>
                 <div>
                     <label for="tipo">Tipo:</label>
-                    <select id="tipo" name="tipo" required>
+                    <select id="tipo" name="tipo">
+                        <option value="" disabled selected></option>
                         <option value="Deportivo" {% if filters['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
                         <option value="Piso" {% if filters['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
                     </select>

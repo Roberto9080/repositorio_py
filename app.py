@@ -149,7 +149,8 @@ def see_products():
         'talla': request.args.get('talla', ''),
         'tipo': request.args.get('tipo', '')
     }
-    order_by = request.args.get('order', 'marca_asc')
+    # Cambiar el valor predeterminado a 'existencias_asc'
+    order_by = request.args.get('order', 'existencias_desc')
 
     query = "SELECT * FROM Productos WHERE 1=1"
     params = []

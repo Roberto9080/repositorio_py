@@ -1,15 +1,20 @@
 /* PROYECTO_PY/static/styles_dashboard.css */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e3f2fd; /* Fondo claro con tono azul suave */
     margin: 0;
     padding: 0;
+    color: #0d47a1; /* Texto en tono azul oscuro */
 }
 
 .dashboard-container {
     text-align: center;
     padding: 20px;
+}
+
+h2 {
+    color: #1a237e; /* Tono azul oscuro */
 }
 
 .grid-container {
@@ -21,41 +26,49 @@ body {
 }
 
 .grid-item {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Fondo blanco */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
 }
 
 .grid-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    background-color: #e1f5fe; /* Fondo azul claro al pasar el mouse */
 }
 
 .grid-item a {
     text-decoration: none;
-    color: #333;
+    color: #1a237e; /* Texto en azul oscuro */
+    font-weight: bold;
 }
 
 .grid-item h3 {
     margin-top: 0;
+    color: #0d47a1; /* Título en azul más oscuro */
 }
 
 .grid-item p {
-    color: #777;
+    color: #424242; /* Texto gris */
+}
+
+.grid-item a:hover {
+    color: #0d47a1; /* Azul oscuro en hover */
 }
 
 .logout-button {
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #ff4b4b;
-    color: #ffffff;
+    background-color: #0d47a1; /* Azul oscuro */
+    color: #ffffff; /* Texto blanco */
     text-decoration: none;
     border-radius: 8px;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .logout-button:hover {
-    background-color: #ff0000;
+    background-color: #1565c0; /* Azul más claro en hover */
+    transform: scale(1.05); /* Aumentar tamaño en hover */
 }

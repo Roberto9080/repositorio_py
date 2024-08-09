@@ -14,7 +14,13 @@
             <div class="grid-item">
                 <a href="{{ url_for('clientes.add_cliente') }}">
                     <h3>Clientes</h3>
-                    <p>Gestión de clientes</p>
+                    <p>Agregar Cliente</p>
+                </a>
+            </div>
+            <div class="grid-item">
+                <a href="{{ url_for('clientes.see_clientes') }}">
+                    <h3>Clientes</h3>
+                    <p>Ver clientes</p>
                 </a>
             </div>
             <div class="grid-item">
@@ -24,15 +30,21 @@
                 </a>
             </div>
             <div class="grid-item">
+                <a href="{{ url_for('see_products') }}">
+                    <h3>Existencias</h3>
+                    <p>Gestión de inventario</p>
+                </a>
+            </div>
+            <div class="grid-item">
                 <a href="{{ url_for('ventas.see_ventas') }}">
                     <h3>Ventas</h3>
-                    <p>Gestión de ventas</p>
+                    <p>Ver los regirstros de las ventas</p>
                 </a>
             </div>
             <div class="grid-item">
                 <a href="{{ url_for('see_products') }}">
-                    <h3>Inventario</h3>
-                    <p>Gestión de inventario</p>
+                    <h3>Ventas</h3>
+                    <p>Hacer una venta</p>
                 </a>
             </div>
         </div>

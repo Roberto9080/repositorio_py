@@ -302,3 +302,78 @@ td img {
 .fa-eye {
     color: blue; /* Puedes cambiar el color según tu diseño */
 }
+
+/* Estilos adicionales para el formulario de filtros */
+.filter-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-form input[type="text"],
+.filter-form input[type="number"],
+.filter-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.filter-form input[type="text"]:focus,
+.filter-form input[type="number"]:focus,
+.filter-form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botón de aplicar filtros */
+.filter-form .button {
+    grid-column: span 2;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-form .button:hover {
+    background-color: #218838;
+}
+
+/* Estilos para el botón de filtros adicionales en el formulario de búsqueda */
+.search-form .button {
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+/* Mensaje de resultados encontrados */
+.results-message {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center;
+}

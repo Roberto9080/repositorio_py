@@ -61,38 +61,40 @@
             <a href="{{ url_for('clientes.see_clientes', order='domicilio_asc') }}" class="button">Domicilio A-Z <i class="fas fa-arrow-down"></i></a>
             <a href="{{ url_for('clientes.see_clientes', order='domicilio_desc') }}" class="button">Domicilio Z-A <i class="fas fa-arrow-up"></i></a>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Domicilio</th>
-                    <th>Teléfono</th>
-                    <th></th> <!-- Nueva columna para el menú desplegable -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for cliente in clientes %}
-                <tr>
-                    <td>{{ cliente.Nombre }}</td>
-                    <td>{{ cliente.Apellido }}</td>
-                    <td>{{ cliente.Domicilio }}</td>
-                    <td>{{ cliente.Telefono }}</td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="dropbtn" onclick="toggleMenu('menu-{{ cliente.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
-                            <div id="menu-{{ cliente.ClienteID }}" class="dropdown-content">
-                                <a href="{{ url_for('clientes.edit_cliente', id=cliente.ClienteID) }}">Editar</a>
-                                <form action="{{ url_for('clientes.delete_cliente', id=cliente.ClienteID) }}" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
-                                    <button type="submit" class="delete-button">Eliminar</button>
-                                </form>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Domicilio</th>
+                        <th>Teléfono</th>
+                        <th></th> <!-- Nueva columna para el menú desplegable -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente.Nombre }}</td>
+                        <td>{{ cliente.Apellido }}</td>
+                        <td>{{ cliente.Domicilio }}</td>
+                        <td>{{ cliente.Telefono }}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="dropbtn" onclick="toggleMenu('menu-{{ cliente.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
+                                <div id="menu-{{ cliente.ClienteID }}" class="dropdown-content">
+                                    <a href="{{ url_for('clientes.edit_cliente', id=cliente.ClienteID) }}">Editar</a>
+                                    <form action="{{ url_for('clientes.delete_cliente', id=cliente.ClienteID) }}" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar este cliente?');">
+                                        <button type="submit" class="delete-button">Eliminar</button>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

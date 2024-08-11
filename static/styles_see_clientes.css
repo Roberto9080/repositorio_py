@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
@@ -104,15 +104,43 @@ th {
     margin-top: 20px;
 }
 
+/* Estilos para las opciones de ordenamiento */
 #order-options {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
+    display: none; /* Oculta las opciones por defecto */
+    position: absolute;
+    top: 4%; /* Alinea el menú justo debajo del botón */
+    left: 95%; /* Alinea el menú a la derecha del botón */
+    transform: translateX(30px); /* Ajusta la separación del botón */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    padding: 10px; /* Aumenta el padding del menú */
+    min-width: 160px; /* Ajusta el ancho mínimo del menú */
 }
 
-#order-options .button {
-    margin-right: 10px;
-    margin-bottom: 10px;
+#order-options a {
+    display: block;
+    padding: 12px 16px; /* Ajusta el padding de los enlaces */
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    margin-bottom: 8px; /* Añade margen inferior entre los enlaces */
+}
+
+#order-options a:last-child {
+    margin-bottom: 0; /* Elimina el margen inferior del último enlace */
+}
+
+#order-options a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+#order-options .fa-arrow-up, #order-options .fa-arrow-down {
+    margin-left: 8px;
 }
 
 /* Estilos para el menú desplegable */

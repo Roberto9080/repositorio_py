@@ -374,3 +374,28 @@ img {
     background-color: #f9f9f9; /* Fondo del mensaje */
     text-align: center; /* Centrar el texto */
 }
+
+/* Estilo para el botón de visibilidad */
+.toggle-visibility {
+    margin: 20px 0;
+    text-align: center;
+}
+
+#toggleVisibilityBtn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#toggleVisibilityBtn:focus {
+    outline: none;
+}
+
+.fa-eye-slash {
+    color: black; /* Puedes cambiar el color según tu diseño */
+}
+
+.fa-eye {
+    color: blue; /* Puedes cambiar el color según tu diseño */
+}

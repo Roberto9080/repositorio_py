@@ -9,6 +9,7 @@
     <script src="{{ url_for('static', filename='js/filtro.js') }}"></script>
     <script src="{{ url_for('static', filename='js/menu_toggle.js') }}"></script>
     <script src="{{ url_for('static', filename='js/order_options.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/toggle_visibility.js') }}"></script>
 </head>
 <body>
     <a href="{{ url_for('dashboard') }}" class="button back-button">Volver</a>
@@ -34,7 +35,11 @@
             <button type="button" class="button" onclick="toggleFilters()">Filtros Adicionales</button>
             <button type="button" class="button" onclick="showOrderOptions()">Ordenar</button>
         </form>
-        
+        <div class="toggle-visibility">
+            <button id="toggleVisibilityBtn" onclick="toggleVisibility()">
+                <i id="visibilityIcon" class="fas fa-eye-slash"></i> <!-- Ojo cerrado -->
+            </button>
+        </div> 
         <div id="additionalFilters" style="display: none;">
             <form action="{{ url_for('ventas.see_ventas') }}" method="post" class="filter-form">
                 <div>
@@ -55,7 +60,8 @@
                 </div>
                 <div>
                     <label for="tipo">Tipo:</label>
-                    <select id="tipo" name="tipo" required>
+                    <select id="tipo" name="tipo">
+                        <option value="" disabled selected></option>
                         <option value="Deportivo" {% if filters['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
                         <option value="Piso" {% if filters['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
                     </select>

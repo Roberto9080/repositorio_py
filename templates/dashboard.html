@@ -11,43 +11,43 @@
         <h2>Bienvenido, {{ username }}!</h2>
         <p>Has iniciado sesión correctamente.</p>
         <div class="grid-container">
-            <div class="grid-item">
+            <div class="grid-item clientes">
                 <a href="{{ url_for('clientes.add_cliente') }}">
                     <h3>Clientes</h3>
                     <p>Agregar Cliente</p>
                 </a>
             </div>
-            <div class="grid-item">
+            <div class="grid-item clientes">
                 <a href="{{ url_for('clientes.see_clientes') }}">
                     <h3>Clientes</h3>
                     <p>Ver clientes</p>
                 </a>
             </div>
-            <div class="grid-item">
+            <div class="grid-item producto">
                 <a href="{{ url_for('add_product') }}">
                     <h3>Producto</h3>
                     <p>Agregar Producto</p>
                 </a>
             </div>
-            <div class="grid-item">
+            <div class="grid-item producto">
                 <a href="{{ url_for('see_products') }}">
                     <h3>Existencias</h3>
                     <p>Gestión de inventario</p>
                 </a>
             </div>
-            <div class="grid-item">
+            <div class="grid-item ventas">
                 <a href="{{ url_for('ventas.see_ventas') }}">
                     <h3>Ventas</h3>
                     <p>Ver las ventas realizadas</p>
                 </a>
             </div>
-            <div class="grid-item">
+            <div class="grid-item ventas">
                 <a href="{{ url_for('see_products') }}">
                     <h3>Ventas</h3>
-                    <p> Realizar una venta </p>
+                    <p>Realizar una venta</p>
                 </a>
             </div>
-        </div>
+        </div>        
         <a href="{{ url_for('logout') }}" class="logout-button">Cerrar Sesión</a>
     </div>
 </body>

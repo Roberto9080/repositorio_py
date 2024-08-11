@@ -35,14 +35,10 @@ h2 {
     transition: transform 0.3s, background-color 0.3s;
 }
 
-.grid-item:hover {
-    transform: translateY(-8px);
-    background-color: #e1f5fe; /* Fondo azul claro al pasar el mouse */
-}
 
 .grid-item a {
     text-decoration: none;
-    color: #1a237e; /* Texto en azul oscuro */
+    color: #1a227e; /* Texto en azul oscuro */
     font-weight: bold;
     font-size: 22px; /* Tamaño de fuente reducido */
 }
@@ -77,4 +73,34 @@ h2 {
 .logout-button:hover {
     background-color: #1565c0; /* Azul más claro en hover */
     transform: scale(1.05); /* Aumentar tamaño en hover */
+}
+
+/* Estilos específicos para cada grupo */
+.grid-item.clientes {
+    background-color: #83d8ff; /* Color de fondo para clientes */
+}
+
+.grid-item.producto {
+    background-color: #8bff8b; /* Color de fondo para producto */
+}
+
+.grid-item.existencias {
+    background-color: #ccffcc; /* Color de fondo para existencias */
+}
+
+.grid-item.ventas {
+    background-color: #e1cb69; /* Color de fondo para ventas */
+}
+
+.grid-item:hover.clientes {
+    transform: translateY(-18px);
+    background-color: #4c8ba8; /* Fondo azul claro al pasar el mouse */
+}
+.grid-item:hover.producto {
+    transform: translateY(-18px);
+    background-color: #4d915e; /* Fondo azul claro al pasar el mouse */
+}
+.grid-item:hover.ventas{
+    transform: translateY(-18px);
+    background-color: #90873b; /* Fondo azul claro al pasar el mouse */
 }

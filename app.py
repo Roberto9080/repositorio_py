@@ -152,7 +152,8 @@ def see_products():
     # Cambiar el valor predeterminado a 'existencias_asc'
     order_by = request.args.get('order', 'existencias_desc')
 
-    query = "SELECT * FROM Productos WHERE 1=1"
+    # mi papa dice que no quiere que le aparezcan los que tienen de existencias 0
+    query = "SELECT * FROM Productos WHERE existencias > 0"
     params = []
 
     if request.method == 'POST':

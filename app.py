@@ -87,6 +87,11 @@ def add_product():
     form_data = {}  # Diccionario para almacenar los valores del formulario
 
     if request.method == 'POST':
+        if 'limpiar' in request.form:
+            # Limpia los datos del formulario y redirige a la misma página
+            form_data = {}
+            return render_template('add_product.html', form_data=form_data)
+
         try:
             # Obtiene los datos del formulario
             marca = request.form['marca']
@@ -99,8 +104,15 @@ def add_product():
             imagen = request.files['imagen']
 
             # Verifica si se ha subido una imagen
-            if imagen.filename == '':
-                raise ValueError("Por favor, agregue una imagen del producto")
+            if imagen.filename:
+                imagen_nombre = imagen.filename
+                imagen.save(f'static/images/{imagen_nombre}')
+            else:
+                # Si no se sube una nueva imagen, mantenemos la existente
+                imagen_nombre = form_data.get('imagen_nombre')
+                if not imagen_nombre:
+                    raise ValueError("Por favor, agregue una imagen del producto")
+
             # Verifica reglas de integridad antes de insertar
             if precio < 0 or existencias < 0 or talla < 0:
                 raise ValueError("El precio, las existencias o la talla no pueden ser negativos")
@@ -109,10 +121,6 @@ def add_product():
             # Asignar el valor de marca al modelo si el modelo está vacío
             if not modelo:
                 modelo = marca
-
-            # Guarda la imagen en el servidor
-            imagen_nombre = imagen.filename
-            imagen.save(f'static/images/{imagen_nombre}')
 
             # Inserta los datos en la base de datos
             cursor = conexion.cursor()
@@ -123,18 +131,20 @@ def add_product():
             conexion.commit()  # Guarda los cambios en la base de datos
 
             message = "Producto agregado exitosamente"
-            form_data = {}  # Limpia los datos del formulario después de una inserción exitosa
+            # No limpiamos el form_data para permitir agregar otro producto similar
         except mysql.connector.Error as err:
             error = f"Error en la base de datos: {err.msg}"
-            form_data = request.form
         except ValueError as ve:
             error = str(ve)
-            form_data = request.form
         except Exception as e:
             error = f"Ocurrió un error: {str(e)}"
-            form_data = request.form
+
+        # Mantener los datos del formulario para un nuevo registro similar
+        form_data = request.form.to_dict(flat=True)
+        form_data['imagen_nombre'] = imagen_nombre
 
     return render_template('add_product.html', message=message, error=error, form_data=form_data)
+
 
 @app.route('/see_products', methods=['GET', 'POST'])
 def see_products():

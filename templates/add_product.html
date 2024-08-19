@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Producto</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_add_product.css') }}">
+    <script src="{{ url_for('static', filename='js/form_functions.js') }}"></script>
 </head>
 <body>
     <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menu</a>
@@ -69,6 +70,7 @@
             <input type="file" id="imagen" name="imagen">
 
             <button type="submit" class="button">Agregar Producto</button>
+            <button type="button" onclick="limpiarCampos()" class="button">Limpiar Campos</button>
             <a href="{{ url_for('see_products') }}" class="button">Ver Productos</a>
         </form>
     </div>

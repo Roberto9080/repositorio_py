@@ -88,9 +88,8 @@ def add_product():
 
     if request.method == 'POST':
         if 'limpiar' in request.form:
-            # Limpia los datos del formulario y redirige a la misma página
-            form_data = {}
-            return render_template('add_product.html', form_data=form_data)
+            message = "Los campos se han limpiado exitosamente"
+            return render_template('add_product.html', message=message, form_data=form_data)
 
         try:
             # Obtiene los datos del formulario
@@ -131,7 +130,6 @@ def add_product():
             conexion.commit()  # Guarda los cambios en la base de datos
 
             message = "Producto agregado exitosamente"
-            # No limpiamos el form_data para permitir agregar otro producto similar
         except mysql.connector.Error as err:
             error = f"Error en la base de datos: {err.msg}"
         except ValueError as ve:
@@ -141,7 +139,6 @@ def add_product():
 
         # Mantener los datos del formulario para un nuevo registro similar
         form_data = request.form.to_dict(flat=True)
-        form_data['imagen_nombre'] = imagen_nombre
 
     return render_template('add_product.html', message=message, error=error, form_data=form_data)
 

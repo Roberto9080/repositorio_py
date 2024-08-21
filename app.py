@@ -121,7 +121,7 @@ def add_product():
             if not modelo:
                 modelo = marca
             if not re.match(r'^[a-zA-Z 0-9]+$', modelo):
-                raise ValueError("El modelo solo pueden contener letras,numeros y espacios")
+                raise ValueError("El modelo solo pueden contener letras,numeros y espacios o estar vacio")
             
 
             # Inserta los datos en la base de datos

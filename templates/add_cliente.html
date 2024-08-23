@@ -5,18 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Cliente</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_add_cliente.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al Menú</a>
     <div class="container">
         <h1>Agregar Cliente</h1>
 
-        <!-- Mostrar el mensaje de error si existe -->
         {% if error %}
             <div class="error">{{ error }}</div>
         {% endif %}
 
-        <!-- Mostrar el mensaje de confirmación si existe -->
         {% if message %}
             <div class="success">{{ message }}</div>
         {% endif %}

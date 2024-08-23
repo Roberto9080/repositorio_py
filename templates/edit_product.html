@@ -41,9 +41,10 @@
 
             <label for="tipo">Tipo:</label>
             <select id="tipo" name="tipo" required>
-                <option value="Deportivo">Deportivo</option>
-                <option value="Piso">Piso</option>
+            <option value="Deportivo" {% if producto['tipo'] == 'Deportivo' %}selected{% endif %}>Deportivo</option>
+            <option value="Piso" {% if producto['tipo'] == 'Piso' %}selected{% endif %}>Piso</option>
             </select>
+
             
             <label for="imagen">Imagen</label>
             <input type="file" id="imagen" name="imagen">

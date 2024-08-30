@@ -72,26 +72,53 @@ th:nth-child(5), td:nth-child(5) {
     width: 10%; /* Ajusta el ancho de la columna de acciones */
 }
 
-.button {
+/* Estilos de los botones */
+.button, .dropbtn, .delete-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px 0;
+    font-size: 1em;
+    font-weight: 500;
     color: #fff;
-    background-color: #007BFF;
+    text-decoration: none;
     border: none;
     border-radius: 5px;
-    text-decoration: none;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.button {
+    background: linear-gradient(45deg, #0062E6, #33AEFF);
 }
 
 .button:hover {
+    background: linear-gradient(45deg, #0053c7, #2894e0);
+    transform: translateY(-3px);
+    box-shadow: 0 15px 20px rgba(0, 83, 199, 0.4);
+}
+
+.button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(0, 83, 199, 0.2);
+}
+
+.dropbtn {
+    background-color: #007BFF;
+}
+
+.dropbtn:hover {
     background-color: #0056b3;
 }
 
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+.delete-button {
+    background-color: #FF4136;
+    width: 100%;
+}
+
+.delete-button:hover {
+    background-color: #D9362C;
 }
 
 .search-form {
@@ -181,20 +208,6 @@ th:nth-child(5), td:nth-child(5) {
     display: inline-block;
 }
 
-.dropbtn {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.dropbtn:hover {
-    background-color: #0056b3;
-}
-
 .dropdown-content {
     display: none;
     position: absolute;
@@ -219,20 +232,6 @@ th:nth-child(5), td:nth-child(5) {
 
 .show {
     display: block;
-}
-
-.delete-button {
-    background-color: #FF4136;
-    color: white;
-    border: none;
-    padding: 10px;
-    text-align: left;
-    width: 100%;
-    cursor: pointer;
-}
-
-.delete-button:hover {
-    background-color: #D9362C;
 }
 
 .flash-messages {

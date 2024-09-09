@@ -17,8 +17,23 @@ body {
 }
 
 h1 {
+    color: #000000; /* Cambié el color para mantener el azul */
+    font-size: 2em; /* Tamaño de fuente para resaltar */
+    margin-bottom: 30px;
+    position: relative;
     text-align: center;
-    color: #333;
+}
+
+h1::after {
+    content: '';
+    width: 250px;
+    height: 4px;
+    background-color: #04ff19;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
 /* Estilos para la tabla de productos */
@@ -60,28 +75,50 @@ td img {
     height: auto; /* Mantener la proporción */
 }
 
-/* Estilos para los botones */
+
 .button {
     display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
+    padding: 12px 30px;
+    margin: 20px 10px 0 0;
+    font-size: 1em;
+    font-weight: 500;
+    color: #fff;
     text-decoration: none;
+    background: linear-gradient(45deg, #0062E6, #33AEFF);
     border: none;
-    border-radius: 4px;
+    border-radius: 50px; /* Bordes más redondeados */
+    box-shadow: 0 8px 15px rgba(0, 98, 230, 0.3);
     cursor: pointer;
-    text-align: center;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background: linear-gradient(45deg, #0053c7, #2894e0);
+    box-shadow: 0 15px 20px rgba(0, 83, 199, 0.4);
+    transform: translateY(-3px);
 }
 
-.back-button {
-    position: absolute; /* Posiciona el botón de manera absoluta */
-    top: 20px; /* Alinea el botón a 20px del borde superior */
-    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
+.button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(0, 83, 199, 0.2);
+}
+
+.dashboard-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 25px;
+    font-size: 0.9em;
+    background: linear-gradient(45deg, #28a745, #85e085);
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+.dashboard-button:hover {
+    background: linear-gradient(45deg, #218838, #6fdc6f);
+    box-shadow: 0 15px 20px rgba(33, 136, 56, 0.4);
 }
 
 /* Estilos para la barra de búsqueda */
@@ -362,4 +399,21 @@ td img {
     padding: 12px 20px;
     font-size: 16px;
     transition: background-color 0.3s;
+}
+
+@media (max-width: 576px) {
+    .container {
+        margin: 40px 20px;
+        padding: 30px 20px;
+    }
+
+    .button {
+        width: 100%;
+        margin: 15px 0 0 0;
+    }
+
+    .dashboard-button {
+        padding: 10px 20px;
+        font-size: 0.85em;
+    }
 }

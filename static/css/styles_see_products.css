@@ -184,19 +184,21 @@ td img {
 .dropdown-content a:hover, .dropdown-content form:hover {
     background-color: #f1f1f1;
 }
-
-.button.delete-button {
-    background-color: #dc3545;
-    border: none;
-    color: white;
-    text-align: left;
-    padding: 12px 16px;
-    width: 100%;
-    cursor: pointer;
+.dropbtn {
+    background-color: #007BFF;
 }
 
-.button.delete-button:hover {
-    background-color: #c82333;
+.dropbtn:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #FF4136;
+    width: 100%;
+}
+
+.delete-button:hover {
+    background-color: #D9362C;
 }
 
 /* Estilos para las opciones de ordenamiento */

@@ -69,7 +69,7 @@
                 </div>
                 <div>
                     <label for="talla">Seleccione una Talla:</label>
-                    <select id="talla" name="talla" required>
+                    <select id="talla" name="talla">
                         <option value="" disabled selected></option>
                         {% for i in range(11, 34) %}
                             <option value="{{ i }}" {% if filters['talla'] == i %}selected{% endif %}>{{ i }} cm</option>

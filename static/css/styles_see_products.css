@@ -8,7 +8,7 @@ body {
 
 .container {
     max-width: 1100px;
-    margin: 50px auto;
+    margin: 10px auto;
     padding: 20px;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -61,9 +61,45 @@ tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+/* Ajustar el ancho de columnas específicas */
+table th:nth-child(1), table td:nth-child(1) {
+    width: 70px; /* Ancho para Marca */
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    width: 70px; /* Ancho para Modelo */
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 100px; /* Ancho para Color */
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    width: 50px; /* Ancho para Existencias */
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    width: 70px; /* Ancho para Precio */
+}
+
+table th:nth-child(6), table td:nth-child(6) {
+    width: 50px; /* Ancho para Talla */
+}
+
+table th:nth-child(7), table td:nth-child(7) {
+    width: 60px; /* Ancho para Tipo */
+}
+
+table th:nth-child(8), table td:nth-child(8) {
+    width: 220px; /* Ancho para Foto */
+}
+
+table th:nth-child(9), table td:nth-child(9) {
+    width: 30px; /* Ancho para menu */
+}
 /* Ajuste del tamaño de las imágenes */
 img {
-    max-width: 150px; /* Tamaño máximo de la imagen */
+    max-width: 200px; /* Tamaño máximo de la imagen */
     height: auto; /* Mantener la proporción */
     border-radius: 4px;
 }
@@ -71,7 +107,8 @@ img {
 /* Asegurar que el contenedor permita que la imagen crezca */
 td img {
     width: 75%; /* Ajusta el ancho de la imagen al 75% del contenedor */
-    max-width: 150px; /* Tamaño máximo de la imagen */
+    max-width: 200px; /* Tamaño máximo de la imagen */
+    max-height: 220px;
     height: auto; /* Mantener la proporción */
 }
 

@@ -43,7 +43,8 @@
                 <input type="number" name="cantidad" id="cantidad" min="1" max="{{ producto.existencias }}" required>
                 
                 <label for="pago">Método de Pago:</label>
-                <select name="pago" id="pago">
+                <select name="pago" id="pago" required>
+                    <option value="" disabled selected></option>
                     <option value="Abonos">Abonos</option>
                     <option value="De contado">De contado</option>
                 </select>

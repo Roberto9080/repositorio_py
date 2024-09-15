@@ -22,141 +22,26 @@ h1 {
     color: #333;
 }
 
-/* Estilos para el botón de volver */
-.back-button {
-    position: absolute; /* Posiciona el botón de manera absoluta */
-    top: 20px; /* Alinea el botón a 20px del borde superior */
-    left: 20px; /* Alinea el botón a 20px del borde izquierdo */
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    font-size: 16px;
-    display: inline-block;
-    transition: background-color 0.3s, box-shadow 0.3s;
-}
-
-.back-button:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.back-button:focus {
-    outline: none;
-}
-
-/* Estilos para el formulario de búsqueda y filtros */
-.search-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px; /* Espacio entre los elementos */
-    margin-bottom: 20px;
-}
-
-.search-form input[type="text"] {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 200px; /* Ajusta el ancho según sea necesario */
-}
-
-.search-form .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+h1 {
+    color: #000000; 
+    font-size: 2em; 
+    margin-bottom: 30px;
+    position: relative;
     text-align: center;
 }
 
-.search-form .button:hover {
-    background-color: #0056b3;
+h1::after {
+    content: '';
+    width: 250px;
+    height: 4px;
+    background-color: #ffc004;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
 }
 
-.search-form .button:focus {
-    outline: none;
-}
-
-/* Estilos para los filtros adicionales */
-#additionalFilters {
-    margin-top: 20px;
-}
-
-.filter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-.filter-form div {
-    margin: 10px;
-}
-
-.filter-form label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.filter-form input, .filter-form select {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-.filter-form .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.filter-form .button:hover {
-    background-color: #0056b3;
-}
-
-.filter-form .button:focus {
-    outline: none;
-}
-
-/* Estilos para las opciones de ordenamiento */
-#order-options {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-#order-options .button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-align: center;
-}
-
-#order-options .button:hover {
-    background-color: #0056b3;
-}
-
-#order-options .button:focus {
-    outline: none;
-}
 
 /* Estilos para la tabla */
 table {
@@ -236,7 +121,191 @@ img {
 }
 
 
-/* Flash messages styles */
+.button {
+    display: inline-block;
+    padding: 12px 30px;
+    margin: 20px 10px 0 0;
+    font-size: 1em;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(45deg, #0062E6, #33AEFF);
+    border: none;
+    border-radius: 50px; /* Bordes más redondeados */
+    box-shadow: 0 8px 15px rgba(0, 98, 230, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.button:hover {
+    background: linear-gradient(45deg, #0053c7, #2894e0);
+    box-shadow: 0 15px 20px rgba(0, 83, 199, 0.4);
+    transform: translateY(-3px);
+}
+
+.button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(0, 83, 199, 0.2);
+}
+
+.dashboard-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 25px;
+    font-size: 0.9em;
+    background: linear-gradient(45deg, #28a745, #85e085);
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+.dashboard-button:hover {
+    background: linear-gradient(45deg, #218838, #6fdc6f);
+    box-shadow: 0 15px 20px rgba(33, 136, 56, 0.4);
+}
+
+/* Estilos para la barra de búsqueda */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-form .button {
+    padding: 10px 20px;
+    margin-top: 0;
+}
+
+/* Añadir margen entre los botones de búsqueda y filtros adicionales */
+.search-form .button + .button {
+    margin-left: 20px; /* Añadir un margen de 20px entre los botones */
+}
+
+/* Estilos para el menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: #f8f9fa;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 9999; /* Asegúrate de que el z-index sea alto para sobreponerse a otros elementos */
+    border-radius: 4px;
+    padding: 10px 0;
+    /* Ajusta la posición del menú desplegable según sea necesario */
+    top: 100%; /* Coloca el menú justo debajo del botón */
+    left: -130px; /* Alinea el menú con el borde izquierdo del contenedor */
+}
+
+.dropdown-content a, .dropdown-content form {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover, .dropdown-content form:hover {
+    background-color: #f1f1f1;
+}
+.dropbtn {
+    background-color: #007BFF;
+}
+
+.dropbtn:hover {
+    background-color: #0056b3;
+}
+
+.delete-button {
+    background-color: #FF4136;
+    width: 100%;
+}
+
+.delete-button:hover {
+    background-color: #D9362C;
+}
+
+
+/* Estilos para las opciones de ordenamiento */
+#order-options {
+    display: none; /* Oculta las opciones por defecto */
+    position: absolute;
+    top: -3%; /* Alinea el menú justo debajo del botón */
+    left: 70%; /* Alinea el menú a la derecha del botón */
+    transform: translateX(150px); /* Ajusta la separación del botón */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    padding: 5px; /* Reduce el padding del menú */
+    min-width: 120px; /* Reduce el ancho mínimo del menú */
+}
+
+#order-options a {
+    display: block;
+    padding: 8px 12px; /* Ajusta el padding de los enlaces */
+    color: #333;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#order-options a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+#order-options .fa-arrow-up, #order-options .fa-arrow-down {
+    margin-left: 8px;
+}
+
+/* Estilos adicionales para mejorar la visibilidad */
+#order-options {
+    margin-top: 10px; /* Añadir espacio entre el botón y el menú */
+}
+
+
+/* Mensajes de éxito y error */
+.error, .success {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
 .flash-messages {
     margin-bottom: 20px;
 }
@@ -255,46 +324,6 @@ img {
 .flash.error {
     background-color: #f8d7da;
     color: #721c24;
-}
-
-/* Dropdown menu styles */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropbtn {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    right: 0;
-}
-
-.dropdown-content a,
-.dropdown-content .delete-button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-    width: 100%;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-.dropdown-content a:hover,
-.dropdown-content .delete-button:hover {
-    background-color: #f1f1f1;
 }
 
 /* Toggle dropdown menu */
@@ -324,44 +353,7 @@ img {
     z-index: 1; /* Asegura que los encabezados se superpongan sobre las filas */
 }
 
-/* Estilos para las opciones de ordenamiento */
-#order-options {
-    display: none; /* Oculta las opciones por defecto */
-    position: absolute;
-    top: 4%; /* Alinea el menú justo debajo del botón */
-    left: 70%; /* Alinea el menú a la derecha del botón */
-    transform: translateX(30px); /* Ajusta la separación del botón */
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
-    padding: 10px; /* Aumenta el padding del menú */
-    min-width: 160px; /* Ajusta el ancho mínimo del menú */
-}
 
-#order-options a {
-    display: block;
-    padding: 12px 16px; /* Ajusta el padding de los enlaces */
-    color: #333;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-    margin-bottom: 8px; /* Añade margen inferior entre los enlaces */
-}
-
-#order-options a:last-child {
-    margin-bottom: 0; /* Elimina el margen inferior del último enlace */
-}
-
-#order-options a:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-#order-options .fa-arrow-up, #order-options .fa-arrow-down {
-    margin-left: 8px;
-}
 /* Agrega estos estilos al final del archivo */
 .results-message {
     font-size: 1.2em;
@@ -374,6 +366,7 @@ img {
     background-color: #f9f9f9; /* Fondo del mensaje */
     text-align: center; /* Centrar el texto */
 }
+
 
 /* Estilo para el botón de visibilidad */
 .toggle-visibility {
@@ -392,10 +385,90 @@ img {
     outline: none;
 }
 
+
 .fa-eye-slash {
     color: black; /* Puedes cambiar el color según tu diseño */
 }
 
 .fa-eye {
     color: blue; /* Puedes cambiar el color según tu diseño */
+}
+
+/* Estilos adicionales para el formulario de filtros */
+.filter-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-form div {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.filter-form input[type="text"],
+.filter-form input[type="number"],
+.filter-form select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.filter-form input[type="text"]:focus,
+.filter-form input[type="number"]:focus,
+.filter-form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Botón de aplicar filtros */
+.filter-form .button {
+    grid-column: span 2;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.filter-form .button:hover {
+    background-color: #218838;
+}
+
+/* Estilos para el botón de filtros adicionales en el formulario de búsqueda */
+.search-form .button {
+    padding: 12px 20px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+@media (max-width: 576px) {
+    .container {
+        margin: 40px 20px;
+        padding: 30px 20px;
+    }
+
+    .button {
+        width: 100%;
+        margin: 15px 0 0 0;
+    }
+
+    .dashboard-button {
+        padding: 10px 20px;
+        font-size: 0.85em;
+    }
 }

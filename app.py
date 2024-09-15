@@ -311,14 +311,13 @@ def delete_product(id):
     finally:
         cursor.close()
 
-
 @app.route('/realizar_venta/<int:producto_id>/<int:cliente_id>', methods=['GET', 'POST'])
 def realizar_venta(producto_id, cliente_id):
     if verificar_sesion():
         return verificar_sesion()
-    
+
     cursor = conexion.cursor(dictionary=True)
-    
+
     try:
         # Obtener los datos del producto y del cliente
         cursor.execute("SELECT * FROM Productos WHERE ProductoID = %s", (producto_id,))
@@ -329,17 +328,23 @@ def realizar_venta(producto_id, cliente_id):
         if request.method == 'POST':
             cantidad = int(request.form['cantidad'])
             pago = request.form['pago']
+            nuevo_precio = request.form.get('nuevo_precio')  # Obtener el nuevo precio si es ingresado
 
             # Verificar que la cantidad no exceda las existencias
             if cantidad > producto['existencias']:
                 error = "La cantidad solicitada excede las existencias disponibles."
                 return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=error)
 
-            # Insertar la venta en la base de datos
+            # Si el método de pago es 'Abonos', usar el nuevo precio si se proporciona
+            precio_a_usar = producto['precio']
+            if pago == 'Abonos' and nuevo_precio:
+                precio_a_usar = float(nuevo_precio)
+
+            # Insertar la venta en la base de datos con el precio ajustado
             cursor.execute("""
                 INSERT INTO Ventas (ProductoID, ClienteID, Cantidad, MetodoPago, Total, Fecha)
                 VALUES (%s, %s, %s, %s, %s, NOW())
-            """, (producto_id, cliente_id, cantidad, pago, cantidad * producto['precio']))
+            """, (producto_id, cliente_id, cantidad, pago, cantidad * precio_a_usar))
             conexion.commit()
 
             return redirect(url_for('ventas.see_ventas'))

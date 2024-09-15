@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Realizar Venta</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_realizar_venta.css') }}">
+    <script src="{{ url_for('static', filename='js/confirm_venta.js') }}"></script>   
+    <script src="{{ url_for('static', filename='js/nuevo_precio.js') }}"></script>   
+
+
 </head>
 <body>
     <div class="container">
@@ -15,7 +19,7 @@
                 <p><strong>Marca:</strong> {{ producto.marca }}</p>
                 <p><strong>Modelo:</strong> {{ producto.modelo }}</p>
                 <p><strong>Color:</strong> {{ producto.color }}</p>
-                <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+                <p><strong>Precio individual:</strong> ${{ producto.precio }}</p>
                 <p><strong>Existencias:</strong> {{ producto.existencias }}</p>
                 <p><strong>Talla:</strong> {{ producto.talla }}</p>
                 <p><strong>Tipo:</strong> {{ producto.tipo }}</p>
@@ -41,19 +45,24 @@
                 <h2>Realizar Venta</h2>
                 <label for="cantidad">Cantidad:</label>
                 <input type="number" name="cantidad" id="cantidad" min="1" max="{{ producto.existencias }}" required>
-                
+
                 <label for="pago">Método de Pago:</label>
-                <select name="pago" id="pago" required>
+                <select name="pago" id="pago" onchange="toggleNuevoPrecio()" required>
                     <option value="" disabled selected></option>
                     <option value="Abonos">Abonos</option>
                     <option value="De contado">De contado</option>
                 </select>
                 
+               <!-- Campo para ingresar el nuevo precio si el método de pago es 'Abonos' -->
+                <div id="nuevo_precio_field" style="display:none;">
+                 <label for="nuevo_precio">Nuevo precio (solo para Abonos):</label>
+                 <input type="number" step="0.01" name="nuevo_precio" id="nuevo_precio" placeholder="Ingresa el nuevo precio">
+                </div>
+
                 <button type="submit">Confirmar Venta</button>
                 <a href="{{ url_for('ventas.escoger_cliente', producto_id=producto.ProductoID) }}" class="btn-cancel">Cancelar</a>
             </section>
         </form>
     </div>
-    <script src="{{ url_for('static', filename='js/confirm_venta.js') }}"></script>
 </body>
 </html>

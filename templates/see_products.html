@@ -126,14 +126,14 @@
                         <div class="dropdown">
                             <button class="dropbtn" onclick="toggleMenu('menu-{{ producto.ProductoID }}')"><i class="fas fa-ellipsis-v"></i></button>
                             <div id="menu-{{ producto.ProductoID }}" class="dropdown-content">
-                                <a href="{{ url_for('edit_product', id=producto.ProductoID) }}">Editar</a>
+                                <a href="{{ url_for('edit_product', id=producto.ProductoID) }}" class="edit-button">Editar</a>
                                 <form action="{{ url_for('delete_product', id=producto.ProductoID) }}" method="post" onsubmit="return confirm('¿Seguro que deseas eliminar este producto?');">
                                     <button type="submit" class="delete-button">Eliminar</button>
                                 </form>
-                                <a href="{{ url_for('ventas.escoger_cliente', producto_id=producto.ProductoID) }}">Realizar Venta</a>
+                                <a href="{{ url_for('ventas.escoger_cliente', producto_id=producto.ProductoID) }}" class="sale-button">Realizar Venta</a>
                             </div>
                         </div>
-                    </td>
+                    </td>                    
                 </tr>
                 {% endfor %}
             </tbody>

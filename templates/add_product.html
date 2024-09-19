@@ -38,7 +38,7 @@
                 <option value="Caterpillar" {% if form_data['marca'] == 'Caterpillar' %}selected{% endif %}>Caterpillar</option>
             </select>
 
-            <label for="modelo">Modelo:</label>
+            <label for="modelo">Modelo(Opcional):</label>
             <input type="text" id="modelo" name="modelo" value="{{ form_data['modelo'] if 'modelo' in form_data else '' }}">
 
             <label for="color">Color:</label>

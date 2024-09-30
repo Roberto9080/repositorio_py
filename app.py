@@ -347,6 +347,14 @@ def realizar_venta(producto_id, cliente_id):
             """, (producto_id, cliente_id, cantidad, pago, cantidad * precio_a_usar))
             conexion.commit()
 
+            # Actualizar existencias del producto (equivalente al trigger SQL)
+            cursor.execute("""
+                UPDATE Productos
+                SET existencias = existencias - %s
+                WHERE ProductoID = %s
+            """, (cantidad, producto_id))
+            conexion.commit()
+
             return redirect(url_for('ventas.see_ventas'))
     except Exception as e:
         # Manejar errores

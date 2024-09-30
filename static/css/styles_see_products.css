@@ -481,6 +481,21 @@ td img {
     transition: background-color 0.3s;
 }
 
+.dashboard-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 12px 25px;
+    font-size: 0.9em;
+    background: linear-gradient(45deg, #28a745, #85e085);
+    box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
+}
+
+.dashboard-button:hover {
+    background: linear-gradient(45deg, #218838, #6fdc6f);
+    box-shadow: 0 15px 20px rgba(33, 136, 56, 0.4);
+}
+
 @media (max-width: 576px) {
     .container {
         margin: 40px 20px;

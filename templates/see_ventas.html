@@ -48,15 +48,33 @@
                 </div>
                 <div>
                     <label for="producto">Producto:</label>
-                    <input type="text" id="producto" name="producto" value="{{ filters['producto'] }}">
+                    <select id="producto" name="producto">
+                        <option value="" disabled selected></option>
+                        <option value="Nike" {% if filters['marca'] == 'Nike' %}selected{% endif %}>Nike</option>
+                        <option value="Adidas" {% if filters['marca'] == 'Adidas' %}selected{% endif %}>Adidas</option>
+                        <option value="Puma" {% if filters['marca'] == 'Puma' %}selected{% endif %}>Puma</option>
+                        <option value="Under Armour" {% if filters['marca'] == 'Under Armour' %}selected{% endif %}>Under Armour</option>
+                        <option value="Asics" {% if filters['marca'] == 'Asics' %}selected{% endif %}>Asics</option>
+                        <option value="Lacoste" {% if filters['marca'] == 'Lacoste' %}selected{% endif %}>Lacoste</option>
+                        <option value="Tommy Hilfiger" {% if filters['marca'] == 'Tommy Hilfiger' %}selected{% endif %}>Tommy Hilfiger</option>
+                        <option value="Reebok" {% if filters['marca'] == 'Reebok' %}selected{% endif %}>Reebok</option>
+                        <option value="Hoka" {% if filters['marca'] == 'Hoka' %}selected{% endif %}>Hoka</option>
+                        <option value="Caterpillar" {% if filters['marca'] == 'Caterpillar' %}selected{% endif %}>Caterpillar</option>
+                    </select>
                 </div>
                 <div>
                     <label for="color">Color:</label>
                     <input type="text" id="color" name="color" value="{{ filters['color'] }}">
                 </div>
                 <div>
-                    <label for="talla">Talla:</label>
-                    <input type="number" step="0.1" id="talla" name="talla" value="{{ filters['talla'] }}">
+                    <label for="talla">Seleccione una Talla:</label>
+                    <select id="talla" name="talla">
+                        <option value="" disabled selected></option>
+                        {% for i in range(11, 34) %}
+                            <option value="{{ i }}" {% if filters['talla'] == i %}selected{% endif %}>{{ i }} cm</option>
+                            <option value="{{ i + 0.5 }}" {% if filters['talla'] == i + 0.5 %}selected{% endif %}>{{ i + 0.5 }} cm</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div>
                     <label for="tipo">Tipo:</label>

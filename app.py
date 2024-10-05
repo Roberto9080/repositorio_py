@@ -22,7 +22,7 @@ conexion = mysql.connector.connect(
 
 # Registrar Blueprints
 app.register_blueprint(clientes_bp, url_prefix='/clientes')
-app.register_blueprint(abonos_bp)
+app.register_blueprint(abonos_bp,  url_prefix='/abonos')
 app.register_blueprint(ventas_bp, url_prefix='/ventas')
 
 # Función para verificar si el usuario ha iniciado sesión
@@ -335,17 +335,33 @@ def realizar_venta(producto_id, cliente_id):
                 error = "La cantidad solicitada excede las existencias disponibles."
                 return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=error)
 
-            # Si el método de pago es 'Abonos', usar el nuevo precio si se proporciona
+            # Si el método de pago es 'Abonos', permitir nuevo precio
             precio_a_usar = producto['precio']
             if pago == 'Abonos' and nuevo_precio:
                 precio_a_usar = float(nuevo_precio)
+
+            total_venta = cantidad * precio_a_usar
 
             # Insertar la venta en la base de datos con el precio ajustado
             cursor.execute("""
                 INSERT INTO Ventas (ProductoID, ClienteID, Cantidad, MetodoPago, Total, Fecha)
                 VALUES (%s, %s, %s, %s, %s, NOW())
-            """, (producto_id, cliente_id, cantidad, pago, cantidad * precio_a_usar))
+            """, (producto_id, cliente_id, cantidad, pago, total_venta))
             conexion.commit()
+
+            venta_id = cursor.lastrowid  # Obtener el ID de la venta insertada
+
+            # Si el método de pago es 'Abonos', registrar el primer abono
+            if pago == 'Abonos':
+                primer_abono = float(request.form['primer_abono'])
+                saldo_restante = total_venta - primer_abono
+
+                # Insertar el abono en la tabla Abonos
+                cursor.execute("""
+                    INSERT INTO Abonos (VentaID, Monto, SaldoRestante, Fecha)
+                    VALUES (%s, %s, %s, NOW())
+                """, (venta_id, primer_abono, saldo_restante))
+                conexion.commit()
 
             # Actualizar existencias del producto (equivalente al trigger SQL)
             cursor.execute("""
@@ -356,6 +372,7 @@ def realizar_venta(producto_id, cliente_id):
             conexion.commit()
 
             return redirect(url_for('ventas.see_ventas'))
+
     except Exception as e:
         # Manejar errores
         return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=str(e))

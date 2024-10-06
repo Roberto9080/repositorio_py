@@ -1,0 +1,193 @@
+/* Estilos básicos para see_abonos.html */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    position: relative;
+    overflow-x: auto;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+h1 {
+    color: #000000; 
+    font-size: 2em; 
+    margin-bottom: 30px;
+    position: relative;
+    text-align: center;
+}
+
+h1::after {
+    content: '';
+    width: 250px;
+    height: 4px;
+    background-color: #ff6347; /* Color distintivo para Abonos */
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Ajustar el ancho de columnas específicas */
+table th:nth-child(1), table td:nth-child(1) {
+    width: 150px; /* Ancho para Cliente */
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    width: 150px; /* Ancho para Producto */
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    width: 100px; /* Ancho para Fecha Abono */
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    width: 150px; /* Ancho para Cantidad Abonada */
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    width: 150px; /* Ancho para Saldo Restante */
+}
+
+/* Estilos para las imágenes, si se utilizan */
+img {
+    max-width: 150px;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* Botones */
+.button {
+    display: inline-block;
+    padding: 12px 30px;
+    margin: 20px 10px 0 0;
+    font-size: 1em;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(45deg, #FF6347, #FF4500);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 8px 15px rgba(255, 99, 71, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.button:hover {
+    background: linear-gradient(45deg, #FF4500, #FF6347);
+    box-shadow: 0 15px 20px rgba(255, 69, 0, 0.4);
+    transform: translateY(-3px);
+}
+
+.button:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px rgba(255, 69, 0, 0.2);
+}
+
+/* Estilos para la barra de búsqueda */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-form input[type="text"] {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-form .button {
+    padding: 10px 20px;
+    margin-top: 0;
+}
+
+/* Mensajes de éxito y error */
+.error, .success {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Toggle dropdown menu */
+.show {
+    display: block;
+}
+
+/* Contenedor de la tabla */
+.table-container {
+    max-height: 550px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Tabla fija */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f2f2f2;
+    z-index: 1;
+}

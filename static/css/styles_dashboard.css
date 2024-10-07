@@ -92,6 +92,10 @@ h2 {
     background-color: #e1cb69; /* Color de fondo para ventas */
 }
 
+.grid-item.abonos {
+    background-color: #e95f28; /* Color de fondo para ventas */
+}
+
 .grid-item:hover.clientes {
     transform: translateY(-18px);
     background-color: #4c8ba8; /* Fondo azul claro al pasar el mouse */
@@ -103,4 +107,9 @@ h2 {
 .grid-item:hover.ventas{
     transform: translateY(-18px);
     background-color: #90873b; /* Fondo azul claro al pasar el mouse */
+}
+
+.grid-item:hover.abonos{
+    transform: translateY(-18px);
+    background-color: #b9461f; /* Fondo azul claro al pasar el mouse */
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_see_abonos.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="{{ url_for('static', filename='js/filtro.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/menu_toggle.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu_dabonos.js') }}"></script>
 </head>
 <body>
     <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al menú</a>
@@ -32,6 +32,7 @@
                         <th>Total Abonado</th>
                         <th>Saldo por Pagar</th>
                         <th>Fecha del Último Abono</th>
+                        <th></th> <!-- Nueva columna para el menú desplegable -->
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,15 @@
                         <td>{{ abono.total_abonado }}</td>
                         <td>{{ abono.saldo_por_pagar }}</td>
                         <td>{{ abono.ultima_fecha_abono }}</td>
+                        <td>
+                            <!-- Botón de menú desplegable -->
+                            <div class="dropdown">
+                                <button class="dropbtn" onclick="toggleMenu('menu-{{ abono.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
+                                <div id="menu-{{ abono.ClienteID }}" class="dropdown-content">
+                                    <a href="{{ url_for('abonos.historial_pagos', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Ver pagos</a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

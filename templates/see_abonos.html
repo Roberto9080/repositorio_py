@@ -48,6 +48,8 @@
                                 <button class="dropbtn" onclick="toggleMenu('menu-{{ abono.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
                                 <div id="menu-{{ abono.ClienteID }}" class="dropdown-content">
                                     <a href="{{ url_for('abonos.historial_pagos', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Ver pagos</a>
+                                    <a href="{{ url_for('abonos.add_abono', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">agregar abono</a>
+
                                 </div>
                             </div>
                         </td>

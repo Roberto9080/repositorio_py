@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Abono</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_add_abono.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('abonos.see_abonos') }}" class="button dashboard-button">Volver a abonos</a>
+    
+    <div class="container">
+        <h1>Agregar Abono</h1>
+        
+        <!-- Mensaje de éxito o error -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Información del cliente -->
+        <div class="client-info">
+            <p><strong>Cliente:</strong> {{ cliente['Nombre'] }} {{ cliente['Apellido'] }}</p>
+        </div>
+        
+        <!-- Formulario de abono -->
+        <form action="{{ url_for('abonos.add_abono', cliente_id=cliente_id) }}" method="POST" class="abono-form">
+            <label for="monto_abono">Monto del Abono:</label>
+            <input type="number" id="monto_abono" name="monto_abono" min="1" step="0.01" required>
+            
+            <button type="submit" class="button submit-button">Agregar Abono</button>
+        </form>
+    </div>
+</body>
+</html>

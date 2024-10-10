@@ -12,14 +12,14 @@
 <body>
     <a href="{{ url_for('dashboard') }}" class="button dashboard-button">Volver al menú</a>
     <div class="container">
-        <h1>Abonos Realizados</h1>
+        <h1>Cuentas con Abonos</h1>
 
         <!-- Mensaje de número de resultados encontrados -->
         <p class="results-message">{{ abonos_count }} resultado{% if abonos_count != 1 %}s{% endif %} encontrado{% if abonos_count != 1 %}s{% endif %}</p>
 
         <!-- Formulario de búsqueda de abonos -->
         <form action="{{ url_for('abonos.see_abonos') }}" method="post" class="search-form">
-            <input type="text" name="search" placeholder="Buscar abonos..." value="{{ search_query }}">
+            <input type="text" name="search" placeholder="Buscar cliente..." value="{{ search_query }}">
             <button type="submit" class="button">Buscar</button>
         </form>
 
@@ -29,8 +29,6 @@
                 <thead>
                     <tr>
                         <th>Cliente</th>
-                        <th>Total Abonado</th>
-                        <th>Saldo por Pagar</th>
                         <th>Fecha del Último Abono</th>
                         <th></th> <!-- Nueva columna para el menú desplegable -->
                     </tr>
@@ -39,8 +37,6 @@
                     {% for abono in abonos %}
                     <tr>
                         <td>{{ abono.cliente_nombre }} {{ abono.cliente_apellido }}</td>
-                        <td>{{ abono.total_abonado }}</td>
-                        <td>{{ abono.saldo_por_pagar }}</td>
                         <td>{{ abono.ultima_fecha_abono }}</td>
                         <td>
                             <!-- Botón de menú desplegable -->
@@ -48,8 +44,7 @@
                                 <button class="dropbtn" onclick="toggleMenu('menu-{{ abono.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
                                 <div id="menu-{{ abono.ClienteID }}" class="dropdown-content">
                                     <a href="{{ url_for('abonos.historial_pagos', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Ver pagos</a>
-                                    <a href="{{ url_for('abonos.add_abono', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">agregar abono</a>
-
+                                    <a href="{{ url_for('abonos.add_abono', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Agregar abono</a>
                                 </div>
                             </div>
                         </td>

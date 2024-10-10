@@ -16,7 +16,6 @@ def verificar_sesion():
     if 'username' not in session:
         return redirect(url_for('login'))
 
-
 @abonos_bp.route('/see_abonos', methods=['GET', 'POST'])
 def see_abonos():
     if verificar_sesion():
@@ -24,19 +23,16 @@ def see_abonos():
 
     search_query = request.args.get('search_query', '')
 
-    # Consulta para obtener el saldo total por cliente consolidado
+    # Consulta para obtener solo el nombre, apellido y la fecha del último abono
     query = """
     SELECT c.ClienteID, c.Nombre AS cliente_nombre, c.Apellido AS cliente_apellido, 
-           SUM(COALESCE(a.Monto, 0)) AS total_abonado,
-           SUM(v.Total) AS total_venta,
-           (SUM(v.Total) - COALESCE(SUM(a.Monto), 0)) AS saldo_por_pagar, 
            MAX(a.Fecha) AS ultima_fecha_abono
     FROM Cliente c
     JOIN Ventas v ON c.ClienteID = v.ClienteID
     LEFT JOIN Abonos a ON v.VentaID = a.VentaID
     WHERE v.MetodoPago = 'Abonos'
     GROUP BY c.ClienteID
-    HAVING saldo_por_pagar > 0
+    HAVING ultima_fecha_abono IS NOT NULL
     """
 
     params = []

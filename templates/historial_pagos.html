@@ -11,6 +11,7 @@
     
     <div class="container">
         <h1>Historial de Pagos de {{ cliente.Nombre }} {{ cliente.Apellido }}</h1>
+        <h3>Saldo a pagar: {{ saldo_total.SaldoTotal if saldo_total else 0 }}</h3>
 
         <!-- Mostrar mensaje si no hay historial -->
         {% if historial_abonos %}
@@ -19,15 +20,23 @@
                 <tr>
                     <th>Fecha</th>
                     <th>Monto Abonado</th>
-                    <th>Saldo Restante</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Color</th>  
+                    <th>Precio</th> 
+                    <th>Cantidad</th>                 
                 </tr>
             </thead>
             <tbody>
                 {% for abono in historial_abonos %}
                 <tr>
                     <td>{{ abono.Fecha }}</td>
-                    <td>{{ abono.Monto }}</td>
-                    <td>{{ abono.saldo_restante }}</td>  <!-- Cambiado aquí -->
+                    <td>{{ abono.Monto }}</td>                  
+                    <td>{{ abono.marca }}</td>
+                    <td>{{ abono.modelo }}</td>
+                    <td>{{ abono.color }}</td>
+                    <td>{{ abono.precio }}</td>
+                    <td>{{ abono.Cantidad }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

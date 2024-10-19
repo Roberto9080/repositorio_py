@@ -325,6 +325,11 @@ def realizar_venta(producto_id, cliente_id):
         cursor.execute("SELECT * FROM Cliente WHERE ClienteID = %s", (cliente_id,))
         cliente = cursor.fetchone()
 
+        # Obtener el saldo total del cliente
+        cursor.execute("SELECT SaldoTotal FROM SaldoClientes WHERE ClienteID = %s", (cliente_id,))
+        saldo_cliente = cursor.fetchone()
+        saldo_total = saldo_cliente['SaldoTotal'] if saldo_cliente else 0
+
         if request.method == 'POST':
             cantidad = int(request.form['cantidad'])
             pago = request.form['pago']
@@ -333,7 +338,9 @@ def realizar_venta(producto_id, cliente_id):
             # Verificar que la cantidad no exceda las existencias
             if cantidad > producto['existencias']:
                 error = "La cantidad solicitada excede las existencias disponibles."
-                return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=error)
+                return render_template('realizar_venta.html', producto=producto, cliente=cliente, 
+                                       producto_id=producto_id, cliente_id=cliente_id, 
+                                       error=error, saldo_total=saldo_total)
 
             # Si el método de pago es 'Abonos', permitir nuevo precio
             precio_a_usar = producto['precio']
@@ -363,6 +370,15 @@ def realizar_venta(producto_id, cliente_id):
                 """, (venta_id, primer_abono, saldo_restante))
                 conexion.commit()
 
+                # Actualizar el saldo total del cliente
+                nuevo_saldo_total = saldo_total + saldo_restante
+                cursor.execute("""
+                    INSERT INTO SaldoClientes (ClienteID, SaldoTotal)
+                    VALUES (%s, %s)
+                    ON DUPLICATE KEY UPDATE SaldoTotal = %s
+                """, (cliente_id, nuevo_saldo_total, nuevo_saldo_total))
+                conexion.commit()
+
             # Actualizar existencias del producto (equivalente al trigger SQL)
             cursor.execute("""
                 UPDATE Productos
@@ -375,11 +391,15 @@ def realizar_venta(producto_id, cliente_id):
 
     except Exception as e:
         # Manejar errores
-        return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id, error=str(e))
+        return render_template('realizar_venta.html', producto=producto, cliente=cliente, 
+                               producto_id=producto_id, cliente_id=cliente_id, 
+                               error=str(e), saldo_total=saldo_total)
     finally:
         cursor.close()
 
-    return render_template('realizar_venta.html', producto=producto, cliente=cliente, producto_id=producto_id, cliente_id=cliente_id)
+    return render_template('realizar_venta.html', producto=producto, cliente=cliente, 
+                           producto_id=producto_id, cliente_id=cliente_id, 
+                           saldo_total=saldo_total)
 
 
 # Inicia la aplicación Flask en modo debug

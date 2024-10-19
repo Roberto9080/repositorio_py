@@ -57,48 +57,70 @@ def see_abonos():
 
     return render_template('see_abonos.html', abonos=abonos, search_query=search_query, abonos_count=abonos_count)
 
-
-
 @abonos_bp.route('/historial_pagos/<int:cliente_id>', methods=['GET'])
 def historial_pagos(cliente_id):
     if verificar_sesion():
         return verificar_sesion()
 
-    # Consulta para obtener los datos del cliente
+    # Consultas para obtener los datos del cliente y el saldo total
     query_cliente = """
     SELECT Nombre, Apellido 
     FROM Cliente 
     WHERE ClienteID = %s
     """
     
-    # Consulta para obtener el historial de abonos y calcular el saldo restante acumulado
-    query_historial = """
-    SELECT a.Fecha, a.Monto, 
-           @saldo_restante := @saldo_restante - a.Monto AS saldo_restante
-    FROM (SELECT v.VentaID, v.Total, v.ClienteID
-          FROM Ventas v
-          WHERE v.ClienteID = %s AND v.MetodoPago = 'Abonos') ventas
-    JOIN Abonos a ON a.VentaID = ventas.VentaID, 
-         (SELECT @saldo_restante := SUM(v.Total) 
-          FROM Ventas v WHERE v.ClienteID = %s AND v.MetodoPago = 'Abonos') init
-    ORDER BY a.Fecha ASC
+    # Consulta para obtener el saldo total del cliente
+    query_saldo_total = """
+    SELECT SaldoTotal 
+    FROM SaldoClientes 
+    WHERE ClienteID = %s
     """
+
+    # Consulta para obtener el historial de abonos y el saldo restante correspondiente
+        # Consulta para obtener el historial de abonos, el saldo restante y los detalles del producto comprado
+    query_historial = """
+    SELECT a.Fecha, a.Monto, a.SaldoRestante, p.marca, p.modelo, p.color, p.precio, v.Cantidad
+    FROM Abonos a
+    JOIN Ventas v ON a.VentaID = v.VentaID
+    JOIN Productos p ON v.ProductoID = p.ProductoID
+    WHERE v.ClienteID = %s AND v.MetodoPago = 'Abonos'
+    ORDER BY a.Fecha DESC
+    """
+
     
     conexion = obtener_conexion()
     cursor = conexion.cursor(dictionary=True)
 
-    # Ejecutar la consulta para obtener el nombre del cliente
-    cursor.execute(query_cliente, (cliente_id,))
-    cliente = cursor.fetchone()
+    try:
+        # Ejecutar la consulta para obtener el nombre del cliente
+        cursor.execute(query_cliente, (cliente_id,))
+        cliente = cursor.fetchone()
 
-    # Ejecutar la consulta para obtener el historial de abonos con saldo acumulado
-    cursor.execute(query_historial, (cliente_id, cliente_id))
-    historial_abonos = cursor.fetchall()
+        if not cliente:
+            flash('Cliente no encontrado.', 'error')
+            return redirect(url_for('abonos.see_abonos'))
 
-    cursor.close()
-    conexion.close()
+        # Ejecutar la consulta para obtener el saldo total del cliente
+        cursor.execute(query_saldo_total, (cliente_id,))
+        saldo_total = cursor.fetchone()
 
-    return render_template('historial_pagos.html', cliente=cliente, historial_abonos=historial_abonos)
+        # Ejecutar la consulta para obtener el historial de abonos
+        cursor.execute(query_historial, (cliente_id,))
+        historial_abonos = cursor.fetchall()
+
+        if not historial_abonos:
+            flash('No hay abonos registrados para este cliente.', 'info')
+            return redirect(url_for('abonos.see_abonos'))
+
+    except Exception as e:
+        flash(f'Error al obtener el historial: {e}', 'error')
+    finally:
+        cursor.close()
+        conexion.close()
+
+    return render_template('historial_pagos.html', cliente=cliente, saldo_total=saldo_total, historial_abonos=historial_abonos)
+
+
 
 @abonos_bp.route('/delete_abono/<int:abono_id>', methods=['POST'])
 def delete_abono(abono_id):
@@ -136,49 +158,61 @@ def add_abono(cliente_id):
         if request.method == 'POST':
             monto_abono = float(request.form['monto_abono'])
 
-            # Obtener la última venta activa para este cliente que tenga el método de pago 'Abonos'
+            # Obtener la última venta activa del cliente que tenga el método de pago 'Abonos'
             cursor.execute("""
-                SELECT VentaID
+                SELECT VentaID, Total
                 FROM Ventas
                 WHERE ClienteID = %s AND MetodoPago = 'Abonos'
                 ORDER BY Fecha DESC LIMIT 1
             """, (cliente_id,))
             venta = cursor.fetchone()
 
-            if venta is None:
-                flash('No se encontró ninguna venta en abonos para este cliente.', 'error')
+            if not venta:
+                flash('No se encontró ninguna venta activa en abonos para este cliente.', 'error')
                 return render_template('add_abono.html', cliente_id=cliente_id, cliente=cliente)
 
             venta_id = venta['VentaID']
 
-            # Obtener el saldo total adeudado del cliente
+            # Obtener el último saldo restante del cliente
             cursor.execute("""
-                SELECT SUM(v.Total) AS total_deudado
-                FROM Ventas v
-                WHERE v.ClienteID = %s AND v.MetodoPago = 'Abonos'
-            """, (cliente_id,))
-            total_deudado = cursor.fetchone()['total_deudado']
+                SELECT SaldoRestante
+                FROM Abonos
+                WHERE VentaID = %s
+                ORDER BY Fecha DESC LIMIT 1
+            """, (venta_id,))
+            ultimo_abono = cursor.fetchone()
 
-            if total_deudado is None:
-                total_deudado = 0
+            if ultimo_abono:
+                saldo_restante = ultimo_abono['SaldoRestante']
+            else:
+                # Si no hay abonos previos, el saldo restante es el total de la venta
+                saldo_restante = venta['Total']
 
-            # Actualizar el saldo restante y registrar el abono
-            saldo_restante = total_deudado - monto_abono
+            # Calcular el nuevo saldo restante después del abono
+            nuevo_saldo_restante = saldo_restante - monto_abono
+
+            # Actualizar el saldo total del cliente en la tabla SaldoClientes
+            cursor.execute("""
+                UPDATE SaldoClientes
+                SET SaldoTotal = SaldoTotal - %s
+                WHERE ClienteID = %s
+            """, (monto_abono, cliente_id))
+
+            # Registrar el nuevo abono
             cursor.execute("""
                 INSERT INTO Abonos (VentaID, Monto, SaldoRestante, Fecha)
                 VALUES (%s, %s, %s, NOW())
-            """, (venta_id, monto_abono, saldo_restante))
-            conexion.commit()  # Guarda los cambios en la base de datos
+            """, (venta_id, monto_abono, nuevo_saldo_restante))
+
+            conexion.commit()
 
             flash('Abono agregado exitosamente', 'success')
             return redirect(url_for('abonos.see_abonos'))
 
     except Exception as e:
-        # Manejar errores
         flash(f'Ocurrió un error: {str(e)}', 'error')
     finally:
         cursor.close()
         conexion.close()
 
     return render_template('add_abono.html', cliente_id=cliente_id, cliente=cliente)
-

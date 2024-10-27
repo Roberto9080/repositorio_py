@@ -132,67 +132,7 @@ img {
     box-shadow: 0 5px 10px rgba(255, 69, 0, 0.2);
 }
 
-.add-pagos-btn {
-    display: inline-block;
-    padding: 12px 30px;
-    margin: 20px 10px 0 0;
-    font-size: 1em;
-    font-weight: 500;
-    color: #fff;
-    text-decoration: none;
-    background: linear-gradient(45deg, #6b4c4cad, #6b5656ad);
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.add-pagos-btn:hover {
-    background: linear-gradient(45deg, #0c0e0cc8, #090a09);
-    box-shadow: 0 15px 20px rgba(255, 255, 255, 0.4);
-    transform: translateY(-3px);
-}
-
-.add-pagos-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 5px 10px rgba(255, 69, 0, 0.2);
-}
-
-.ver-pagos-btn {
-    display: inline-block;
-    padding: 12px 30px;
-    margin: 20px 10px 0 0;
-    font-size: 1em;
-    font-weight: 500;
-    color: #fff;
-    text-decoration: none;
-    background: linear-gradient(45deg, #b90a2a, #b90a2a);
-    border: none;
-    border-radius: 50px;
-    box-shadow: 0 8px 15px rgba(139, 13, 13, 0.767);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.ver-pagos-btn:hover {
-    background: linear-gradient(45deg, #550303c8, #490707);
-    box-shadow: 0 15px 20px rgba(255, 254, 255, 0.4);
-    transform: translateY(-3px);
-}
-
-.ver-pagos-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 5px 10px rgba(99, 34, 10, 0.2);
-}
-
-.dashboard-button {
+.back-button {
     position: fixed;
     top: 20px;
     left: 20px;
@@ -202,7 +142,7 @@ img {
     box-shadow: 0 8px 15px rgba(40, 167, 69, 0.3);
 }
 
-.dashboard-button:hover {
+.back-button:hover {
     background: linear-gradient(45deg, #218838, #6fdc6f);
     box-shadow: 0 15px 20px rgba(33, 136, 56, 0.4);
 }

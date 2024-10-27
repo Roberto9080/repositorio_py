@@ -28,26 +28,19 @@
             <table>
                 <thead>
                     <tr>
+                        <th>¿Deseas agregar un abono?</th>
                         <th>Cliente</th>
                         <th>Fecha del Último Abono</th>
-                        <th></th> <!-- Nueva columna para el menú desplegable -->
+                        <th>Revisa el historial de pagos!</th> 
                     </tr>
                 </thead>
                 <tbody>
                     {% for abono in abonos %}
                     <tr>
+                        <td> <a href="{{ url_for('abonos.add_abono', cliente_id=abono.ClienteID) }}" class="button add-pagos-btn">Agregar abono</a></td>
                         <td>{{ abono.cliente_nombre }} {{ abono.cliente_apellido }}</td>
                         <td>{{ abono.ultima_fecha_abono }}</td>
-                        <td>
-                            <!-- Botón de menú desplegable -->
-                            <div class="dropdown">
-                                <button class="dropbtn" onclick="toggleMenu('menu-{{ abono.ClienteID }}')"><i class="fas fa-ellipsis-v"></i></button>
-                                <div id="menu-{{ abono.ClienteID }}" class="dropdown-content">
-                                    <a href="{{ url_for('abonos.historial_pagos', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Ver pagos</a>
-                                    <a href="{{ url_for('abonos.add_abono', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Agregar abono</a>
-                                </div>
-                            </div>
-                        </td>
+                        <td><a href="{{ url_for('abonos.historial_pagos', cliente_id=abono.ClienteID) }}" class="button ver-pagos-btn">Ver pagos</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

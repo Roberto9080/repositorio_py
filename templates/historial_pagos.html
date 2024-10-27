@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Pagos</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_see_abonos.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles_historial_pagos.css') }}">
 </head>
 <body>
     <a href="{{ url_for('abonos.see_abonos') }}" class="button back-button">Volver a Abonos</a>
     
     <div class="container">
         <h1>Historial de Pagos de {{ cliente.Nombre }} {{ cliente.Apellido }}</h1>
-        <h3>Saldo a pagar: {{ saldo_total.SaldoTotal if saldo_total else 0 }}</h3>
+        <h3>Saldo a pagar: ${{ saldo_total.SaldoTotal if saldo_total else 0 }}</h3>
 
         <!-- Mostrar mensaje si no hay historial -->
         {% if historial_abonos %}
@@ -20,7 +20,8 @@
                 <tr>
                     <th>Fecha</th>
                     <th>Monto Abonado</th>
-                    <th>Marca</th>
+                    <th>Ultima compra:
+                        Marca</th>
                     <th>Modelo</th>
                     <th>Color</th>  
                     <th>Precio</th> 
@@ -31,11 +32,11 @@
                 {% for abono in historial_abonos %}
                 <tr>
                     <td>{{ abono.Fecha }}</td>
-                    <td>{{ abono.Monto }}</td>                  
+                    <td>${{ abono.Monto }}</td>                  
                     <td>{{ abono.marca }}</td>
                     <td>{{ abono.modelo }}</td>
                     <td>{{ abono.color }}</td>
-                    <td>{{ abono.precio }}</td>
+                    <td>${{ abono.precio }}</td>
                     <td>{{ abono.Cantidad }}</td>
                 </tr>
                 {% endfor %}

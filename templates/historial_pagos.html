@@ -20,11 +20,11 @@
                 <tr>
                     <th>Fecha</th>
                     <th>Monto Abonado</th>
-                    <th>Ultima compra:
+                    <th>Última compra:
                         Marca</th>
                     <th>Modelo</th>
                     <th>Color</th>  
-                    <th>Precio</th> 
+                    <th>Precio Usado</th> 
                     <th>Cantidad</th>                 
                 </tr>
             </thead>
@@ -36,7 +36,7 @@
                     <td>{{ abono.marca }}</td>
                     <td>{{ abono.modelo }}</td>
                     <td>{{ abono.color }}</td>
-                    <td>${{ abono.precio }}</td>
+                    <td>${{ abono.precio_usado }}</td> <!-- Mostrar el precio ajustado -->
                     <td>{{ abono.Cantidad }}</td>
                 </tr>
                 {% endfor %}

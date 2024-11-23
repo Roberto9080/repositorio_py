@@ -76,15 +76,17 @@ def historial_pagos(cliente_id):
     WHERE ClienteID = %s
     """
 
-    # Consulta para obtener el historial de abonos y el saldo restante correspondiente
-        # Consulta para obtener el historial de abonos, el saldo restante y los detalles del producto comprado
+    # Consulta para obtener el historial de abonos, el saldo restante y los detalles del producto comprado
     query_historial = """
-    SELECT a.Fecha, a.Monto, a.SaldoRestante, p.marca, p.modelo, p.color, p.precio, v.Cantidad
+    SELECT a.Fecha, a.Monto, a.SaldoRestante, p.marca, p.modelo, p.color, (v.Total / v.Cantidad) AS precio_usado, v.Cantidad
     FROM Abonos a
-    JOIN Ventas v ON a.VentaID = v.VentaID
-    JOIN Productos p ON v.ProductoID = p.ProductoID
-    WHERE v.ClienteID = %s AND v.MetodoPago = 'Abonos'
-    ORDER BY a.Fecha DESC
+    JOIN 
+    Ventas v ON a.VentaID = v.VentaID
+    JOIN 
+    Productos p ON v.ProductoID = p.ProductoID
+    WHERE 
+    v.ClienteID = %s AND v.MetodoPago = 'Abonos'
+    ORDER BY a.Fecha DESC;
     """
 
     

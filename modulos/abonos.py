@@ -78,7 +78,7 @@ def historial_pagos(cliente_id):
 
     # Consulta para obtener el historial de abonos, el saldo restante y los detalles del producto comprado
     query_historial = """
-    SELECT a.Fecha, a.Monto, a.SaldoRestante, p.marca, p.modelo, p.color, (v.Total / v.Cantidad) AS precio_usado, v.Cantidad
+    SELECT a.Fecha, a.Monto, p.marca, p.modelo, p.color, (v.Total / v.Cantidad) AS precio_usado, v.Cantidad
     FROM Abonos a
     JOIN 
     Ventas v ON a.VentaID = v.VentaID
@@ -160,9 +160,35 @@ def add_abono(cliente_id):
         if request.method == 'POST':
             monto_abono = float(request.form['monto_abono'])
 
+            # Obtener el saldo total actual del cliente
+            cursor.execute("SELECT SaldoTotal FROM SaldoClientes WHERE ClienteID = %s", (cliente_id,))
+            saldo_cliente = cursor.fetchone()
+
+            if not saldo_cliente:
+                flash('No se encontró el saldo total del cliente.', 'error')
+                return render_template('add_abono.html', cliente_id=cliente_id, cliente=cliente)
+
+            saldo_total = saldo_cliente['SaldoTotal']
+
+            # Validar que el monto del abono no exceda el saldo total
+            if monto_abono > saldo_total:
+                flash('El monto del abono no puede ser mayor al saldo que el cliente debe.', 'error')
+                return render_template('add_abono.html', cliente_id=cliente_id, cliente=cliente)
+
+            # Calcular el nuevo saldo total después del abono
+            nuevo_saldo_total = saldo_total - monto_abono
+
+            # Actualizar el saldo total en SaldoClientes
+            cursor.execute("""
+                UPDATE SaldoClientes
+                SET SaldoTotal = %s
+                WHERE ClienteID = %s
+            """, (nuevo_saldo_total, cliente_id))
+
+            # Registrar el abono en la tabla Abonos
             # Obtener la última venta activa del cliente que tenga el método de pago 'Abonos'
             cursor.execute("""
-                SELECT VentaID, Total
+                SELECT VentaID
                 FROM Ventas
                 WHERE ClienteID = %s AND MetodoPago = 'Abonos'
                 ORDER BY Fecha DESC LIMIT 1
@@ -175,41 +201,17 @@ def add_abono(cliente_id):
 
             venta_id = venta['VentaID']
 
-            # Obtener el último saldo restante del cliente
+            # Insertar el registro del abono
             cursor.execute("""
-                SELECT SaldoRestante
-                FROM Abonos
-                WHERE VentaID = %s
-                ORDER BY Fecha DESC LIMIT 1
-            """, (venta_id,))
-            ultimo_abono = cursor.fetchone()
-
-            if ultimo_abono:
-                saldo_restante = ultimo_abono['SaldoRestante']
-            else:
-                # Si no hay abonos previos, el saldo restante es el total de la venta
-                saldo_restante = venta['Total']
-
-            # Calcular el nuevo saldo restante después del abono
-            nuevo_saldo_restante = saldo_restante - monto_abono
-
-            # Actualizar el saldo total del cliente en la tabla SaldoClientes
-            cursor.execute("""
-                UPDATE SaldoClientes
-                SET SaldoTotal = SaldoTotal - %s
-                WHERE ClienteID = %s
-            """, (monto_abono, cliente_id))
-
-            # Registrar el nuevo abono
-            cursor.execute("""
-                INSERT INTO Abonos (VentaID, Monto, SaldoRestante, Fecha)
-                VALUES (%s, %s, %s, NOW())
-            """, (venta_id, monto_abono, nuevo_saldo_restante))
+                INSERT INTO Abonos (VentaID, Monto, Fecha)
+                VALUES (%s, %s, NOW())
+            """, (venta_id, monto_abono))
 
             conexion.commit()
-
-            flash('Abono agregado exitosamente', 'success')
+            
             return redirect(url_for('abonos.see_abonos'))
+
+            
 
     except Exception as e:
         flash(f'Ocurrió un error: {str(e)}', 'error')

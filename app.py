@@ -160,7 +160,7 @@ def see_products():
         'tipo': request.args.get('tipo', '')
     }
     # Cambiar el valor predeterminado a 'existencias_asc'
-    order_by = request.args.get('order', 'existencias_desc')
+    order_by = request.args.get('order', 'existencias_asc')
 
     # mi papa dice que no quiere que le aparezcan los que tienen de existencias 0
     query = "SELECT * FROM Productos WHERE existencias > 0"
@@ -361,17 +361,16 @@ def realizar_venta(producto_id, cliente_id):
             # Si el método de pago es 'Abonos', registrar el primer abono
             if pago == 'Abonos':
                 primer_abono = float(request.form['primer_abono'])
-                saldo_restante = total_venta - primer_abono
+                nuevo_saldo_total = saldo_total + (total_venta - primer_abono)
 
                 # Insertar el abono en la tabla Abonos
                 cursor.execute("""
-                    INSERT INTO Abonos (VentaID, Monto, SaldoRestante, Fecha)
-                    VALUES (%s, %s, %s, NOW())
-                """, (venta_id, primer_abono, saldo_restante))
+                    INSERT INTO Abonos (VentaID, Monto, Fecha)
+                    VALUES (%s, %s, NOW())
+                """, (venta_id, primer_abono))
                 conexion.commit()
 
-                # Actualizar el saldo total del cliente
-                nuevo_saldo_total = saldo_total + saldo_restante
+                # Actualizar el saldo total del cliente en SaldoClientes
                 cursor.execute("""
                     INSERT INTO SaldoClientes (ClienteID, SaldoTotal)
                     VALUES (%s, %s)
@@ -379,7 +378,7 @@ def realizar_venta(producto_id, cliente_id):
                 """, (cliente_id, nuevo_saldo_total, nuevo_saldo_total))
                 conexion.commit()
 
-            # Actualizar existencias del producto (equivalente al trigger SQL)
+            # Actualizar existencias del producto
             cursor.execute("""
                 UPDATE Productos
                 SET existencias = existencias - %s
